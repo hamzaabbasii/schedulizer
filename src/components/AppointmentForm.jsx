@@ -142,7 +142,7 @@ function AppointmentForm() {
 			<Transition appear show={isModalOpen} as={Fragment}>
 				<Dialog
 					as="div"
-					className="fixed inset-0 z-10 overflow-y-auto bg-indigo-600 pattern-texture-[#FAF8ED]/60 pattern-texture-scale-[1.5]"
+					className="z-10 fixed inset-0 bg-indigo-600 overflow-y-auto pattern-texture-[#FAF8ED]/60 pattern-texture-scale-[1.5]"
 					onClose={closeModalAndNavigate}>
 					<div className="min-h-screen text-center">
 						<Dialog.Overlay className="fixed" />
@@ -153,14 +153,14 @@ function AppointmentForm() {
 						</span>
 						<Dialog.Description
 							as="div"
-							className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-[#FAF8ED] p-12 text-center align-middle transition-all">
+							className="inline-block bg-[#FAF8ED] my-8 p-12 rounded-2xl w-full max-w-md text-center transform transition-all overflow-hidden align-middle">
 							<Dialog.Title
 								as="h1"
-								className="leading-2 font-bebas text-5xl font-semibold text-indigo-500">
+								className="font-bebas font-semibold text-5xl text-indigo-500 leading-2">
 								Dashboard Access Denied
 							</Dialog.Title>
 							<div className="mt-2">
-								<p className="font-poppins text-sm text-black">
+								<p className="font-poppins text-black text-sm">
 									You&rsquo;re not signed in as a business owner. Please sign in
 									as a business owner to access the dashboard.
 								</p>
@@ -169,50 +169,50 @@ function AppointmentForm() {
 					</div>
 				</Dialog>
 			</Transition>
-			<div className="flex h-auto flex-col items-center justify-center py-12">
-				<h1 className="flex justify-center py-16 font-bebas text-8xl font-semibold tracking-wide text-indigo-500">
+			<div className="flex flex-col justify-center items-center py-12 h-auto">
+				<h1 className="flex justify-center py-16 font-bebas font-semibold text-8xl text-indigo-500 tracking-wide">
 					BOOK YOUR APPOINTMENT.
 				</h1>
-				<div className="group flex flex-col items-center justify-center gap-7 break-words rounded-2xl bg-[#FAF8ED] p-8 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] md:max-w-sm">
+				<div className="flex flex-col justify-center items-center gap-7 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-8 rounded-2xl md:max-w-sm break-words group">
 					<div className="flex flex-col space-y-4">
 						<div className="flex flex-col justify-center text-center">
-							<div className="font-poppins text-base font-semibold text-black">
+							<div className="font-poppins font-semibold text-base text-black">
 								{service?.serviceName}
 							</div>
-							<div className="font-muktaVaani text-sm font-light text-black">
+							<div className="font-light font-muktaVaani text-black text-sm">
 								by <strong>{business?.businessName}</strong>
 							</div>
 						</div>
 
-						<div className="serviceDetails flex flex-wrap items-center justify-center space-x-4">
-							<div className="font-muktaVaani text-xs font-light text-black">
+						<div className="flex flex-wrap justify-center items-center space-x-4 serviceDetails">
+							<div className="font-light font-muktaVaani text-black text-xs">
 								Duration: <strong>{service?.serviceDuration}</strong>
 							</div>
-							<div className="font-muktaVaani text-xs font-light text-black">
+							<div className="font-light font-muktaVaani text-black text-xs">
 								Price: Rs. <strong>{service?.servicePrice}</strong>
 							</div>
-							<div className="font-muktaVaani text-xs font-light text-black">
+							<div className="font-light font-muktaVaani text-black text-xs">
 								Days: <strong>{service?.serviceDays}</strong>
 							</div>
-							<div className="font-muktaVaani text-xs font-light text-black">
+							<div className="font-light font-muktaVaani text-black text-xs">
 								Timings: <strong>{service?.serviceTiming}</strong>
 							</div>
 						</div>
 					</div>
-					<div className="serviceDescription break-words text-center font-muktaVaani text-sm font-normal text-black">
+					<div className="font-muktaVaani font-normal text-black text-center text-sm break-words serviceDescription">
 						{service?.serviceDescription}
 					</div>
 				</div>
-				<div className="flex w-full items-center justify-center px-32 pt-12">
+				<div className="flex justify-center items-center px-32 pt-12 w-full">
 					<form
 						action=""
-						className="flex w-full flex-col items-center justify-center space-x-24">
+						className="flex flex-col justify-center items-center space-x-24 w-full">
 						<div className="">
 							<Datepicker value={value} onChange={handleValueChange} />
 						</div>
 						<div className="flex flex-col space-y-8">
 							<div className="flex justify-center space-x-12">
-								<div className="flex w-full flex-col space-y-8">
+								<div className="flex flex-col space-y-8 w-full">
 									<select
 										value={selectedDuration}
 										onChange={(e) =>
@@ -249,7 +249,7 @@ function AppointmentForm() {
 										/>
 									</div>
 								</div>
-								<div className="flex w-full flex-col justify-center">
+								<div className="flex flex-col justify-center w-full">
 									<div>
 										<InputField
 											inputFieldName="nameForAppointment"
@@ -275,7 +275,7 @@ function AppointmentForm() {
 										/>
 										<div
 											id="character-counter"
-											className="text-right text-sm text-indigo-500 opacity-80">
+											className="text-right opacity-80 text-indigo-500 text-sm">
 											<span id="typed-characters">0</span>
 											<span>/</span>
 											<span id="maximum-characters">500</span>

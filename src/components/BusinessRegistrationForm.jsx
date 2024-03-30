@@ -25,9 +25,9 @@ function BusinessRegistrationForm() {
 	const [businessCity, setBusinessCity] = useState("");
 	const [businessCategory, setBusinessCategory] = useState("");
 	const [businessAddress, setBusinessAddress] = useState("");
-	const [businessAddressLink, setBusinessAddressLink] = useState("");
+	const [businessMapLink, setBusinessMapLink] = useState("");
 	const [businessProfilePicture, setBusinessProfilePicture] = useState(null);
-	const [businessDescription, setBusinessDescription] = useState("");
+	const [businessBio, setBusinessBio] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [emailError, setEmailError] = useState("");
 	const [error, setError] = useState({});
@@ -77,7 +77,7 @@ function BusinessRegistrationForm() {
 	const typedCharactersElementRef = useRef(null);
 
 	useEffect(() => {
-		const textAreaElement = document.querySelector("#businessDescription");
+		const textAreaElement = document.querySelector("#businessBio");
 		typedCharactersElementRef.current =
 			document.querySelector("#typed-characters");
 
@@ -138,9 +138,14 @@ function BusinessRegistrationForm() {
 		return true;
 	};
 
-	const isAlphabetic = (value) => /^[A-Za-z\s&]+$/.test(value);
-	const isContactNumber = (value) => /^\d{11}$/.test(value);
+	const isBusinessName = (value) => {
+		const characterCount = value.replace(/\s/g, "").length;
+		const isValid = /^[A-Za-z\s/,&]+$/.test(value);
+		return isValid && characterCount <= 15;
+	};
+	const isContactNumber = (value) => /^\d{10,11}$/.test(value);
 	const isText = (value) => /^.*$/.test(value);
+
 	const isTextOrUrl = (value) => {
 		const urlPattern = new RegExp(
 			"^(https?:\\/\\/)?" + // protocol
@@ -154,7 +159,15 @@ function BusinessRegistrationForm() {
 		); // fragment locator
 		return isText(value) || urlPattern.test(value);
 	};
-	const isBusinessBio = (value) => (value.length = 100);
+
+	const isBusinessBio = (value) => /^.{100,}$/.test(value);
+	const [counterColor, setCounterColor] = useState("text-indigo-500");
+
+	useEffect(() => {
+		setCounterColor(
+			businessBio.length < 100 ? "text-red-500" : "text-indigo-500"
+		);
+	}, [businessBio]);
 
 	const validateField = (
 		value,
@@ -182,42 +195,39 @@ function BusinessRegistrationForm() {
 		}
 	};
 
-	const closeModalAndNavigate = () => {
-		setIsModalOpen(false);
-		navigate("/schedulizer/dashboard");
-	};
-
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		setIsLoading(true);
-		const businessData = {
-			businessName,
-			businessContactNumber,
-			businessEmail,
-			userEmail,
-			businessCity,
-			businessCategory,
-			businessAddress,
-			businessAddressLink,
-			businessDescription,
-		};
 
 		// Create a new FormData instance
 		const formData = new FormData();
 
 		// Append the business data and the businessProfilePicture to the FormData instance
-		Object.keys(businessData).forEach((key) =>
-			formData.append(key, businessData[key])
-		);
+		formData.append("businessName", businessName);
+		formData.append("businessContactNumber", businessContactNumber);
+		formData.append("businessEmail", businessEmail);
+		formData.append("userEmail", userEmail);
+		formData.append("businessCity", businessCity);
+		formData.append("businessCategory", businessCategory);
+		formData.append("businessAddress", businessAddress);
+		formData.append("businessMapLink", businessMapLink);
+		formData.append("businessBio", businessBio);
 		formData.append("businessProfilePicture", businessProfilePicture);
+
+		for (let pair of formData.entries()) {
+			console.log(pair[0] + ", " + pair[1]);
+			console.log("File name: " + businessProfilePicture.name);
+			console.log("File size: " + businessProfilePicture.size);
+			console.log("File path: " + businessProfilePicture.path);
+		}
 
 		try {
 			// Dispatch the register business request action
-			dispatch(registerBusinessRequest(businessData));
+			dispatch(registerBusinessRequest());
 
-			const response = await axios.post("/business/registered", businessData, {
+			const response = await axios.post("/business/registered", formData, {
 				headers: {
-					"Content-Type": "application/json",
+					"Content-Type": "multipart/form-data",
 				},
 			});
 
@@ -234,7 +244,7 @@ function BusinessRegistrationForm() {
 				setIsModalOpen(true);
 
 				// Close the modal and navigate after 4 seconds
-				setTimeout(closeModalAndNavigate, 4000);
+				setTimeout(() => closeModalAndNavigate(response.data.businessId), 4000);
 			} else {
 				// Dispatch the register business failure action with an appropriate error message
 				dispatch(
@@ -252,28 +262,50 @@ function BusinessRegistrationForm() {
 				setEmailError("Email already exists. Please choose a different Email.");
 			} else {
 				console.log("error data", error.response?.data);
-				console.log("Form data", businessData);
+				for (let pair of formData.entries()) {
+					console.log(pair[0] + ", " + pair[1]);
+					console.log("File name: " + businessProfilePicture.name);
+					console.log("File size: " + businessProfilePicture.size);
+				}
 			}
 			setIsLoading(false); // Always set isLoading to false when an error occurs
 		}
 	};
 
+	const closeModalAndNavigate = (businessId) => {
+		setIsModalOpen(false);
+		navigate(`/schedulizer/businessDashboard/${businessId}`);
+	};
+
 	const displayError = (emailError, error) =>
 		emailError ? emailError : error.businessEmail;
 
+	console.log("businessData: ", {
+		businessName,
+		businessContactNumber,
+		businessEmail,
+		userEmail,
+		businessCity,
+		businessCategory,
+		businessAddress,
+		businessMapLink,
+		businessBio,
+		businessProfilePicture,
+	});
+
 	return (
 		<Layout>
-			<div className="flex min-h-screen flex-col justify-center py-12">
+			<div className="flex flex-col justify-center py-12 min-h-screen">
 				<div className="flex justify-center">
-					<div className="flex flex-col items-center justify-center">
-						<h1 className="font-bebas text-8xl font-semibold tracking-wide text-indigo-500">
-							<span className="font-poppins text-4xl font-normal">
+					<div className="flex flex-col justify-center items-center">
+						<h1 className="font-bebas font-semibold text-8xl text-indigo-500 tracking-wide">
+							<span className="font-normal font-poppins text-4xl">
 								Let us know
 							</span>{" "}
 							<br /> more about your business.
 						</h1>
 						<form onSubmit={handleSubmit}>
-							<div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-4 md:w-full md:grid-cols-2 lg:w-[600px] xl:w-[900px]">
+							<div className="gap-x-8 gap-y-4 grid grid-cols-1 md:grid-cols-2 mt-12 md:w-full lg:w-[600px] xl:w-[900px]">
 								<div>
 									<InputField
 										inputFieldId="businessName"
@@ -289,8 +321,8 @@ function BusinessRegistrationForm() {
 										validate={(value) =>
 											validateField(
 												value,
-												isAlphabetic,
-												"Business name should only contain alphabets",
+												isBusinessName,
+												"Business name should be less than 15 characters (excluding spaces), only contain alphabets and special characters (/ & ,).",
 												"businessName",
 												"Business Name" // pass the label name here
 											)
@@ -315,7 +347,7 @@ function BusinessRegistrationForm() {
 											validateField(
 												value,
 												isContactNumber,
-												"Contact number should only contain numbers and be 11-15 digits.",
+												"Contact number should only contain numbers and be 10-11 digits.",
 												"businessContactNumber",
 												"Contact Number" // pass the label name here
 											)
@@ -354,7 +386,7 @@ function BusinessRegistrationForm() {
 									/>
 								</div>
 
-								<div className="grid grid-cols-2 gap-x-6">
+								<div className="gap-x-6 grid grid-cols-2">
 									<div>
 										<Dropdown
 											dropdownbuttonname="select category"
@@ -384,26 +416,26 @@ function BusinessRegistrationForm() {
 
 								<div>
 									<InputField
-										inputFieldId="businessAddressLink"
+										inputFieldId="businessMapLink"
 										inputFieldType="text"
 										inputFieldPlaceholder="e.g. https://maps.google.com/?q=1234+Main+St"
-										inputFieldHtmlFor="businessAddressLink"
+										inputFieldHtmlFor="businessMapLink"
 										inputFieldLabelName="Google Maps Link"
 										isRequired={true}
 										fieldType="input"
-										value={businessAddressLink}
-										onChange={(e) => setBusinessAddressLink(e.target.value)}
+										value={businessMapLink}
+										onChange={(e) => setBusinessMapLink(e.target.value)}
 										validateOnBlur={true}
 										validate={(value) =>
 											validateField(
 												value,
 												isTextOrUrl,
 												"Enter a valid url.",
-												"businessAddressLink",
+												"businessMapLink",
 												"Google Maps Link"
 											)
 										}
-										inputFieldError={error.businessAddressLink}
+										inputFieldError={error.businessMapLink}
 									/>
 								</div>
 
@@ -434,34 +466,35 @@ function BusinessRegistrationForm() {
 
 								<div>
 									<InputField
-										inputFieldId="businessDescription"
+										inputFieldId="businessBio"
 										inputFieldType="text"
 										inputFieldPlaceholder="tell us a little about your business"
-										inputFieldHtmlFor="businessDescription"
+										inputFieldHtmlFor="businessBio"
 										inputFieldLabelName="Business Bio"
 										isRequired={true}
 										fieldType="textarea"
 										cols={10}
 										rows={5}
 										maxLength={500}
-										value={businessDescription}
-										onChange={(e) => setBusinessDescription(e.target.value)}
+										value={businessBio}
+										onChange={(e) => setBusinessBio(e.target.value)}
 										validateOnBlur={true}
 										validate={(value) =>
 											validateField(
 												value,
 												isBusinessBio,
-												"Service description should be 100 characters.",
-												"businessDescription",
+												"Service bio should be 100 characters.",
+												"businessBio",
 												"Business Description"
 											)
 										}
-										inputFieldError={error.serviceDescription}
+										inputFieldError={error.businessBio}
 									/>
 									<div
 										id="character-counter"
-										className="text-right text-sm text-indigo-500 opacity-80">
-										<span id="typed-characters">0</span>
+										className={`text-right opacity-80 text-sm ${counterColor}`}
+									>
+										<span id="typed-characters">{businessBio.length}</span>
 										<span>/</span>
 										<span id="maximum-characters">500</span>
 									</div>
@@ -480,7 +513,7 @@ function BusinessRegistrationForm() {
 								</div>
 							</div>
 
-							<div className="py-8 xs:px-16 md:px-32 xl:px-36">
+							<div className="md:px-32 xl:px-36 xs:px-16 py-8">
 								<Button
 									buttonName="SUBMIT"
 									buttonType="submit"
@@ -492,7 +525,7 @@ function BusinessRegistrationForm() {
 										!businessCity ||
 										!businessCategory ||
 										!businessAddress ||
-										!businessAddressLink
+										!businessMapLink
 									}
 								/>
 							</div>
@@ -503,25 +536,29 @@ function BusinessRegistrationForm() {
 			<Transition appear show={isModalOpen} as={Fragment}>
 				<Dialog
 					as="div"
-					className="fixed inset-0 z-10 overflow-y-auto bg-indigo-600 pattern-texture-[#FAF8ED]/60 pattern-texture-scale-[1.5]"
-					onClose={closeModalAndNavigate}>
+					className="z-10 fixed inset-0 bg-indigo-600 overflow-y-auto pattern-texture-[#FAF8ED]/60 pattern-texture-scale-[1.5]"
+					onClose={closeModalAndNavigate}
+				>
 					<div className="min-h-screen text-center">
 						<Dialog.Overlay className="fixed" />
 						<span
 							className="inline-block h-screen align-middle"
-							aria-hidden="true">
+							aria-hidden="true"
+						>
 							&#8203;
 						</span>
 						<Dialog.Description
 							as="div"
-							className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-[#FAF8ED] p-12 text-center align-middle transition-all">
+							className="inline-block bg-[#FAF8ED] my-8 p-12 rounded-2xl w-full max-w-md text-center transform transition-all overflow-hidden align-middle"
+						>
 							<Dialog.Title
 								as="h1"
-								className="leading-2 font-bebas text-5xl font-semibold text-indigo-500">
+								className="font-bebas font-semibold text-5xl text-indigo-500 leading-2"
+							>
 								Business Registration Successful!
 							</Dialog.Title>
 							<div className="mt-2">
-								<p className="font-poppins text-sm text-black">
+								<p className="font-poppins text-black text-sm">
 									You will be redirected to your Dashboard shortly.
 								</p>
 							</div>

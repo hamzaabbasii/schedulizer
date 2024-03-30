@@ -2,15 +2,15 @@ import mongoose from "mongoose";
 // import Appointment from "./appointment";
 
 const businessSchema = new mongoose.Schema({
-	businessName: {
+	name: {
 		type: String,
 		required: true,
 	},
-	businessContactNumber: {
+	contactNumber: {
 		type: Number,
 		required: true,
 	},
-	businessEmail: {
+	workEmail: {
 		type: String,
 		required: true,
 	},
@@ -18,39 +18,31 @@ const businessSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	businessCity: {
+	category: {
 		type: String,
 		required: true,
 	},
-	businessType: {
+	city: {
 		type: String,
 		required: true,
 	},
-	businessEmployees: {
+	mapLink: {
 		type: String,
 		required: true,
 	},
-	businessWorkField: {
+	address: {
 		type: String,
 		required: true,
 	},
-	businessAddress: {
-		type: String,
-		required: true,
-	},
-	businessAddressLink: {
-		type: String,
-		required: true,
-	},
-	businessProfile: {
-		type: String,
-		default: "./public/images/logo.png",
-	},
-	businessBio: {
+	bio: {
 		type: String,
 		required: true,
 		default:
 			"Welcome to our busness. We hope you have a wonderful experience with us. We sstrive to provide the best service possible.",
+	},
+	profilePicture: {
+		type: String,
+		default: "./public/images/logo.png",
 	},
 	services: [{ type: mongoose.Types.ObjectId, ref: "Service" }],
 });
