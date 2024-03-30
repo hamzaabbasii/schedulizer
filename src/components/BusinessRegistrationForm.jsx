@@ -8,6 +8,7 @@ import Layout from "./Layout";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserEmail } from "../redux/slices/userSlice";
 import {
+	setIsBusinessRegistered,
 	registerBusinessRequest,
 	registerBusinessSuccess,
 	registerBusinessFailure,
@@ -224,6 +225,7 @@ function BusinessRegistrationForm() {
 		try {
 			// Dispatch the register business request action
 			dispatch(registerBusinessRequest());
+			dispatch(setIsBusinessRegistered(false));
 
 			const response = await axios.post("/business/registered", formData, {
 				headers: {
@@ -237,6 +239,7 @@ function BusinessRegistrationForm() {
 			if (response.data.success) {
 				// Dispatch the register business success action
 				dispatch(registerBusinessSuccess(response.data));
+				dispatch(setIsBusinessRegistered(true));
 
 				setIsLoading(false);
 
@@ -254,19 +257,25 @@ function BusinessRegistrationForm() {
 				setIsLoading(false);
 			}
 		} catch (error) {
-			if (
-				error.response &&
-				error.response.data.error ===
+			if (error.response) {
+				if (
+					error.response.data.error ===
 					"Email already exists. Please choose a different Email."
-			) {
-				setEmailError("Email already exists. Please choose a different Email.");
-			} else {
-				console.log("error data", error.response?.data);
-				for (let pair of formData.entries()) {
-					console.log(pair[0] + ", " + pair[1]);
-					console.log("File name: " + businessProfilePicture.name);
-					console.log("File size: " + businessProfilePicture.size);
+				) {
+					setEmailError(
+						"Email already exists. Please choose a different Email."
+					);
+				} else {
+					console.log("error data", error.response.data);
+					for (let pair of formData.entries()) {
+						console.log(pair[0] + ", " + pair[1]);
+						console.log("File name: " + businessProfilePicture.name);
+						console.log("File size: " + businessProfilePicture.size);
+					}
 				}
+			} else {
+				// The error did not come from the server
+				console.log("An error occurred:", error.message);
 			}
 			setIsLoading(false); // Always set isLoading to false when an error occurs
 		}
@@ -506,6 +515,7 @@ function BusinessRegistrationForm() {
 										inputFieldType="file"
 										inputFieldHtmlFor="fileUpload"
 										inputFieldLabelName="Add Profile Picture"
+										inputFieldPlaceholder="click to upload a file"
 										fieldType="file"
 										acceptedFileTypes="image/*" // Accepts all image types
 										onFileChange={handleFileChange} // handleFileChange is a function you define to handle the file input change

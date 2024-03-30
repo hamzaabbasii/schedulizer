@@ -17,10 +17,8 @@ function ServiceAddForm() {
 	const [breakStartTime, setBreakStartTime] = useState("");
 	const [breakEndTime, setBreakEndTime] = useState("");
 
-	const selectedBusiness = useSelector(
-		(state) => state.business.selectedBusiness
-	);
-	const businessEmail = selectedBusiness?.businessEmail;
+	const selectedBusiness = useSelector((state) => state.business.businessData);
+	const businessEmail = selectedBusiness?.workEmail;
 	const businessId = selectedBusiness?._id;
 	const [serverError, setApiError] = useState("");
 
@@ -211,31 +209,30 @@ function ServiceAddForm() {
 		}
 	};
 
-	// console.log(
-	// 	"service data:",
-	// 	serviceTitle,
-	// 	serviceDuration,
-	// 	servicePrice,
-	// 	serviceStartTime,
-	// 	serviceEndTime,
-	// 	breakStartTime,
-	// 	breakEndTime,
-	// 	selectedDays,
-	// 	serviceDescription,
-	// 	businessEmail,
-	// 	businessId
-	// );
+	console.log("service data:", [
+		serviceTitle,
+		serviceDuration,
+		servicePrice,
+		serviceStartTime,
+		serviceEndTime,
+		breakStartTime,
+		breakEndTime,
+		selectedDays,
+		serviceDescription,
+		businessEmail,
+		businessId,
+	]);
 
 	return (
-		<div className="flex items-center justify-center py-28">
+		<div className="flex justify-center items-center py-28">
 			<div className="flex flex-col justify-center">
 				<div className="md:w-full lg:w-[600px] xl:w-[800px]">
-					<h2 className="mb-12 flex items-center justify-center font-bebas text-8xl font-semibold text-indigo-500 md:px-24 xl:lg:px-12">
+					<h2 className="flex justify-center items-center mb-12 md:px-24 xl:lg:px-12 font-bebas font-semibold text-8xl text-indigo-500">
 						Add a Service.
 					</h2>
 					<form onSubmit={handleSubmit} className="">
-						<div className="mt-12 space-y-4">
-							<div className="grid w-full grid-cols-5 justify-center space-x-4">
+						<div className="space-y-4 mt-12">
+							<div className="justify-center space-x-4 grid grid-cols-5 w-full">
 								<div className="col-span-5">
 									<InputField
 										inputFieldId="serviceTitle"
@@ -262,7 +259,7 @@ function ServiceAddForm() {
 								</div>
 							</div>
 
-							<div className="grid w-full grid-flow-col gap-4">
+							<div className="gap-4 grid grid-flow-col w-full">
 								<div className="">
 									<Dropdown
 										dropdownbuttonname="select duration"
@@ -410,7 +407,7 @@ function ServiceAddForm() {
 								checkboxFor="serviceDays"
 							/>
 							{error.selectedDays && (
-								<p className="mt-1 font-poppins text-xs text-red-500">
+								<p className="mt-1 font-poppins text-red-500 text-xs">
 									{error.selectedDays}
 								</p>
 							)}
@@ -442,18 +439,19 @@ function ServiceAddForm() {
 							/>
 							<div
 								id="character-counter"
-								className="text-right text-sm text-indigo-500 opacity-80">
+								className="text-right opacity-80 text-indigo-500 text-sm"
+							>
 								<span id="typed-characters">0</span>
 								<span>/</span>
 								<span id="maximum-characters">500</span>
 							</div>
 						</div>
 						{serverError && (
-							<p className="mt-1 font-poppins text-xs text-red-500">
+							<p className="mt-1 font-poppins text-red-500 text-xs">
 								{serverError}
 							</p>
 						)}
-						<div className="py-8 xs:px-16 md:px-32 xl:px-64">
+						<div className="md:px-32 xl:px-64 xs:px-16 py-8">
 							<Button
 								buttonName="ADD SERVICE"
 								buttonType="submit"
