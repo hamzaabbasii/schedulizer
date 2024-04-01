@@ -6,128 +6,49 @@ import { useEffect } from "react";
 function ServiceCard({ service, businessName, businessId }) {
 	useEffect(() => {
 		animate(
-			".serviceDescription",
+			".description",
 			{ scale: [0.9, 1], opacity: [0, 1] },
 			{ duration: 1.5 }
 		);
 		animate(".serviceDetails", { opacity: [-1, 1] }, { duration: 1.5 });
 	});
 
+	const timing = `${service?.startTime} to ${service?.endTime}`;
+
 	return (
 		<div>
-			{/* <div className="flex items-center justify-center">
-				<div className="group relative w-full break-words rounded-xl bg-[#FAF8ED] shadow-xl md:max-w-sm">
-					<div className="p-6">
-						<div className="overflow-hidden text-center">
-							<div className="flex flex-col justify-center">
-								<div className="">
-									<h4 className="font-poppins text-lg font-bold text-[#18191E]">
-										{service.serviceName} <br />
-										<span className="font-muktaVaani text-lg font-light">
-											by
-										</span>
-										<br /> {businessName}
-									</h4>
-								</div>
-								<div className="flex flex-col items-center justify-center py-4">
-									<p className="font-muktaVaani text-xs font-normal text-gray-600">
-										Service Duration: {service.serviceDuration}
-									</p>
-									<p className="font-muktaVaani text-xs font-normal text-gray-600">
-										Timings: {service.serviceTiming}
-									</p>
-									<p className="font-muktaVaani text-xs font-normal text-gray-600">
-										Price: {service.servicePrice}
-									</p>
-									<p className="font-muktaVaani text-xs font-normal text-gray-600">
-										Days: {service.serviceDays}
-									</p>
-								</div>
-								<div className="flex flex-wrap justify-center">
-									<div className="businessDescription w-full px-2">
-										<p className="text-md mb-4 font-muktaVaani leading-relaxed text-[#18191E]">
-											{service.serviceDescription}
-										</p>
-									</div>
-									<div className="appointmentButton pt-2">
-										<Button
-											buttonName="BOOK APPOINTMENT"
-											buttonLink="/schedulizer/businessinfo"
-										/>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> */}
-
-			{/* <div className="group inline-flex w-full flex-col items-center justify-center space-y-6 break-words rounded-2xl bg-[#FAF8ED] p-8 shadow-xl md:max-w-sm">
-				<div className="flex flex-col justify-center text-center">
-					<div className="font-poppins text-base font-semibold text-black">
-						{service.serviceName}
-					</div>
-					<div className="font-muktaVaani text-xs font-light text-black">
-						by {businessName}
-					</div>
-				</div>
-				<div className="flex items-center justify-center space-x-4">
-					<div className="font-muktaVaani text-xs font-light text-black">
-						Duration: {service.serviceDuration}
-					</div>
-					<div className="font-muktaVaani text-xs font-light text-black">
-						Price: Rs. {service.servicePrice}
-					</div>
-					<div className="font-muktaVaani text-xs font-light text-black">
-						Days: {service.serviceDays}
-					</div>
-					<div className="font-muktaVaani text-xs font-light text-black">
-						Timings: {service.serviceTiming}
-					</div>
-				</div>
-				<div className="break-words text-center font-muktaVaani text-sm font-normal text-black">
-					{service.serviceDescription.substring(0, 250)}
-				</div>
-				<div className="appointmentButton pt-2">
-					<Button
-						buttonName="BOOK APPOINTMENT"
-						buttonLink="/schedulizer/businessinfo"
-					/>
-				</div>
-			</div> */}
-
-			<div className="group inline-flex flex-col items-center justify-center gap-5 break-words rounded-2xl bg-[#FAF8ED] border-indigo-200 border-2 p-8 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] md:max-w-sm">
-				<div className="flex flex-col items-center justify-center gap-7">
+			<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-8 rounded-2xl md:max-w-sm break-words group">
+				<div className="flex flex-col justify-center items-center gap-7">
 					<div className="flex flex-col space-y-4">
 						<div className="flex flex-col justify-center text-center">
-							<div className="font-poppins text-base font-semibold text-black">
-								{service.serviceName}
+							<div className="font-poppins font-semibold text-base text-black">
+								{service.title}
 							</div>
-							<div className="font-muktaVaani text-sm font-light text-black">
+							<div className="font-light font-muktaVaani text-black text-sm">
 								by <strong>{businessName}</strong>
 							</div>
 						</div>
 
-						<div className="serviceDetails flex flex-wrap items-center justify-center space-x-4">
-							<div className="font-muktaVaani text-xs font-light text-black">
-								Duration: <strong>{service.serviceDuration[0]}</strong>
+						<div className="flex flex-wrap justify-center items-center space-x-4 serviceDetails">
+							<div className="font-light font-muktaVaani text-black text-xs">
+								Duration: <strong>{service.duration[0]}</strong>
 							</div>
-							<div className="font-muktaVaani text-xs font-light text-black">
-								Price: Rs. <strong>{service.servicePrice}</strong>
+							<div className="font-light font-muktaVaani text-black text-xs">
+								Price: Rs. <strong>{service.price}</strong>
 							</div>
-							<div className="font-muktaVaani text-xs font-light text-black">
-								Timings: <strong>{service.serviceTiming}</strong>
+							<div className="font-light font-muktaVaani text-black text-xs">
+								Timings: <strong>{timing}</strong>
 							</div>
-							<div className="font-muktaVaani text-xs font-light text-black">
-								Days: <strong>{service.serviceDays}</strong>
+							<div className="font-light font-muktaVaani text-black text-xs">
+								Days: <strong>{service.days}</strong>
 							</div>
 						</div>
 					</div>
 
-					<div className="serviceDescription break-words text-center font-muktaVaani text-sm font-normal text-black">
-						{service.serviceDescription.substring(0, 250)}
+					<div className="font-muktaVaani font-normal text-black text-center text-sm break-words description">
+						{service.description.substring(0, 250)}
 					</div>
-					<div className="appointmentButton pt-2">
+					<div className="pt-2 appointmentButton">
 						<Button
 							buttonName="BOOK APPOINTMENT"
 							buttonLink={`/schedulizer/appointmentform/${businessId}/${service._id}`}
@@ -141,13 +62,15 @@ function ServiceCard({ service, businessName, businessId }) {
 
 ServiceCard.propTypes = {
 	service: PropTypes.shape({
-		serviceName: PropTypes.string.isRequired,
-		serviceDuration: PropTypes.string.isRequired,
-		servicePrice: PropTypes.number.isRequired,
+		title: PropTypes.string.isRequired,
+		duration: PropTypes.string.isRequired,
+		price: PropTypes.number.isRequired,
 		serviceTiming: PropTypes.string.isRequired,
-		serviceDescription: PropTypes.string.isRequired,
-		serviceDays: PropTypes.string.isRequired,
+		description: PropTypes.string.isRequired,
+		days: PropTypes.string.isRequired,
 		_id: PropTypes.string.isRequired,
+		startTime: PropTypes.string.isRequired,
+		endTime: PropTypes.string.isRequired,
 	}).isRequired,
 	businessName: PropTypes.string.isRequired,
 	businessId: PropTypes.string.isRequired,

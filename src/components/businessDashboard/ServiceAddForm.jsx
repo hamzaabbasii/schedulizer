@@ -39,7 +39,6 @@ function ServiceAddForm() {
 		return (hour % 12 || 12) + ":" + minute + " " + (hour >= 12 ? "PM" : "AM");
 	}
 
-	const timing = serviceStartTime + " to " + serviceEndTime;
 	const [error, setError] = useState({});
 	const [isLoading, setIsLoading] = useState(false);
 	const [typedCharacters, setTypedCharacters] = useState(0);
@@ -171,14 +170,17 @@ function ServiceAddForm() {
 			businessId,
 			serviceTitle,
 			serviceDuration,
-			servicePrice: "Rs." + servicePrice,
-			timing,
-			serviceDescription,
+			servicePrice,
+			serviceStartTime,
+			serviceEndTime,
+			breakStartTime,
+			breakEndTime,
 			selectedDays,
+			serviceDescription,
 			businessEmail,
 		};
 
-		// console.log("serviceData", serviceData);
+		console.log("serviceData", serviceData);
 
 		if (selectedDays.length === 0) {
 			setError((prevErrors) => ({
@@ -209,19 +211,19 @@ function ServiceAddForm() {
 		}
 	};
 
-	console.log("service data:", [
-		serviceTitle,
-		serviceDuration,
-		servicePrice,
-		serviceStartTime,
-		serviceEndTime,
-		breakStartTime,
-		breakEndTime,
-		selectedDays,
-		serviceDescription,
-		businessEmail,
-		businessId,
-	]);
+	// console.log("service data:", [
+	// 	serviceTitle,
+	// 	serviceDuration,
+	// 	servicePrice,
+	// 	serviceStartTime,
+	// 	serviceEndTime,
+	// 	breakStartTime,
+	// 	breakEndTime,
+	// 	selectedDays,
+	// 	serviceDescription,
+	// 	businessEmail,
+	// 	businessId,
+	// ]);
 
 	return (
 		<div className="flex justify-center items-center py-28">

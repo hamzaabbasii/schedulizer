@@ -9,7 +9,6 @@ import {
 
 const servicesRouter = express.Router();
 
-// Register Business
 servicesRouter.post("/add", addServices);
 servicesRouter.get("/all", getAll);
 servicesRouter.get("/:id", getById);

@@ -1,34 +1,68 @@
 import mongoose from "mongoose";
 
+// const timeSchema = new mongoose.Schema({
+// 	hours: {
+// 		type: Number,
+// 		required: true,
+// 		min: 1,
+// 		max: 12,
+// 	},
+// 	minutes: {
+// 		type: Number,
+// 		required: true,
+// 		min: 0,
+// 		max: 59,
+// 	},
+// 	period: {
+// 		type: String,
+// 		enum: ["AM", "PM"],
+// 		required: true,
+// 	},
+// });
+
 // Create Schema
+
 const ServiceSchema = new mongoose.Schema({
-	business_id: [{ type: mongoose.Types.ObjectId, ref: "Business" }],
-	serviceName: {
+	businessId: [{ type: mongoose.Types.ObjectId, ref: "Business" }],
+	title: {
 		type: String,
 		required: true,
 	},
-	serviceDuration: {
-		type: String,
+	duration: {
+		type: Object,
 		required: true,
 	},
-	serviceTiming: {
-		type: String,
-		required: true,
-	},
-	serviceDays: {
-		type: String,
-		required: true,
-	},
-	servicePrice: {
+	price: {
 		type: Number,
 		required: true,
 	},
-	serviceDescription: {
+	startTime: {
+		type: String,
+		required: true,
+	},
+	endTime: {
+		type: String,
+		required: true,
+	},
+	breakStartTime: {
+		type: String,
+		required: true,
+	},
+	breakEndTime: {
+		type: String,
+		required: true,
+	},
+	days: {
+		type: String,
+		required: true,
+	},
+	description: {
 		type: String,
 		required: true,
 	},
 	businessEmail: {
 		type: String,
+		ref: "Business",
 		required: true,
 	},
 });

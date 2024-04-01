@@ -4,6 +4,12 @@ import { animate } from "motion";
 import { useEffect } from "react";
 
 function BusinessCard({ business }) {
+	const imagePath = business.profilePicture.replace(
+		"public/",
+		"/backend/public/"
+	);
+	console.log(imagePath);
+
 	useEffect(() => {
 		animate(
 			".businessDescription",
@@ -18,103 +24,36 @@ function BusinessCard({ business }) {
 	});
 
 	return (
-		<div className="flex items-center justify-center">
-			{/* <div className="group relative w-full break-words rounded-xl bg-[#FAF8ED] shadow-xl md:max-w-sm">
-				<div className="py-2">
-					<div className="flex flex-wrap justify-center">
-						<div className="flex w-full justify-center">
-							<div className="relative">
-								<img
-									src="./images/logo.png"
-									className="absolute -bottom-10 -left-10 flex max-w-[80px] items-center justify-center rounded-full border-2 border-black bg-[#FAF8ED] shadow-md"
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="overflow-hidden pt-16 text-center">
-						<div className="flex justify-center space-x-6">
-							<div className="businessNameType">
-								<h4 className="font-poppins text-lg font-bold text-[#18191E]">
-									{business.businessName}
-								</h4>
-								<p className="font-muktaVaani text-xs font-normal text-gray-600">
-									{business.businessWorkField} / {business.businessType}
-								</p>
-							</div>
-							<div className="py-4">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									stroke="black"
-									className="current-fill h-4 w-4"
-									viewBox="0 0 24 24">
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth="2"
-										d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-									/>
-								</svg>
-							</div>
-							<div className="businessRating flex flex-col items-center justify-center">
-								<p className="font-poppins text-xl font-bold text-[#18191E]">
-									4.3 / 5
-								</p>
-								<p className="font-muktaVaani text-sm font-normal text-gray-600">
-									Rating
-								</p>
-							</div>
-						</div>
-					</div>
-					<div className="mx-6 py-6 text-center">
-						<div className="flex flex-wrap justify-center">
-							<div className="businessDescription w-full px-2">
-								<p className="text-md mb-4 font-muktaVaani leading-relaxed text-[#18191E]">
-									welcome to {business.businessName}. We sepecialize in all
-									sorts of {business.businessWorkField} solution
-								</p>
-							</div>
-							<div className="appointmentButton pt-2">
-								<Button
-									buttonName="VISIT PROFILE"
-									buttonLink={`/schedulizer/businessinfo/${business._id}`}
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> */}
-
-			<div className="group inline-flex flex-col items-center justify-center gap-5 break-words rounded-2xl bg-[#FAF8ED] border-indigo-200 border-2 p-8 shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] md:max-w-sm">
-				<div className="flex flex-col items-center justify-center gap-7">
-					<div className="inline-flex items-center justify-between gap-8">
+		<div className="flex justify-center items-center">
+			<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-6 rounded-2xl md:max-w-sm break-words group hover:scale-[1.02] duration-500 ease-in-out">
+				<div className="flex flex-col justify-center items-center gap-7">
+					<div className="inline-flex justify-between items-center gap-8">
 						<img
-							className="h-12 w-12 rounded-full border-2 border-black"
-							src="./images/logo.png"
+							className="border-2 border-black rounded-full w-12 h-12"
+							src={imagePath}
+							alt="Profile"
 						/>
 						<div className="flex flex-col justify-start">
-							<div className="font-poppins text-base font-semibold text-black">
-								{business.businessName}
+							<div className="font-poppins font-semibold text-base text-black">
+								{business.name}
 							</div>
-							<div className="businessDetails inline-flex items-center justify-center gap-2.5">
-								<div className="font-muktaVaani text-xs text-black">
-									{business.businessWorkField}
+							<div className="inline-flex justify-center items-center gap-2.5 businessDetails">
+								<div className="font-muktaVaani text-black text-xs">
+									{business.category}
 								</div>
-								<div className="font-muktaVaani text-xs text-black">
-									{business.businessCity}
+								<div className="font-muktaVaani text-black text-xs">
+									{business.city}
 								</div>
-								<div className="font-muktaVaani text-xs text-black">
+								<div className="font-muktaVaani text-black text-xs">
 									Rating: 4.5 / 5
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="businessDescription text-center font-muktaVaani text-sm font-normal text-black">
-						This is the description for {business.businessName}. They are a{" "}
-						{business.businessWorkField} business in the city of{" "}
-						{business.businessCity}. Visit their profile to get to know the
-						amazing services they provide or go on over to the services page and
-						take a look at their services.
+					<div className="font-muktaVaani font-normal text-black text-center text-sm businessDescription">
+						{business.bio.length > 100
+							? `${business.bio.slice(0, 100)}...`
+							: business.bio}
 					</div>
 					<div className="">
 						<Button
@@ -130,11 +69,13 @@ function BusinessCard({ business }) {
 
 BusinessCard.propTypes = {
 	business: PropTypes.shape({
-		businessName: PropTypes.string,
+		name: PropTypes.string,
 		businessType: PropTypes.string,
-		businessWorkField: PropTypes.string,
-		businessCity: PropTypes.string,
+		category: PropTypes.string,
+		city: PropTypes.string,
 		_id: PropTypes.string,
+		bio: PropTypes.string,
+		profilePicture: PropTypes.string,
 	}).isRequired,
 };
 

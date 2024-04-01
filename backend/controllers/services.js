@@ -4,20 +4,23 @@ import Business from "../models/businesses.js";
 // Add Services
 export async function addServices(req, res) {
 	const serviceData = {
-		business_id: req.body.businessId,
-		serviceName: req.body.serviceTitle,
-		serviceDuration: req.body.serviceDuration,
-		serviceTiming: req.body.timing,
-		serviceDays: req.body.selectedDays,
-		servicePrice: req.body.servicePrice,
-		serviceDescription: req.body.serviceDescription,
+		businessId: req.body.businessId,
+		title: req.body.serviceTitle,
+		duration: req.body.serviceDuration,
+		price: req.body.servicePrice,
+		startTime: req.body.serviceStartTime,
+		endTime: req.body.serviceEndTime,
+		breakStartTime: req.body.breakStartTime,
+		breakEndTime: req.body.breakEndTime,
+		days: req.body.selectedDays,
+		description: req.body.serviceDescription,
 		businessEmail: req.body.businessEmail,
 	};
 
 	try {
 		const createdService = await Service.create(serviceData);
 
-		await Business.findByIdAndUpdate(req.body.business_id, {
+		await Business.findByIdAndUpdate(req.body.businessId, {
 			$push: { services: createdService._id },
 		});
 
@@ -76,15 +79,19 @@ export async function updateById(req, res) {
 			return res.status(404).send("Service not found");
 		}
 
-		existingService.serviceName =
-			req.body.serviceName || existingService.serviceName;
-		existingService.durration = req.body.durration || existingService.durration;
+		existingService.title = req.body.title || existingService.title;
+		existingService.duration = req.body.duration || existingService.duration;
+		existingService.price = req.body.price || existingService.price;
 		existingService.startTime = req.body.startTime || existingService.startTime;
 		existingService.endTime = req.body.endTime || existingService.endTime;
-		existingService.serviceDays =
-			req.body.serviceDays || existingService.serviceDays;
-		existingService.servicePrice =
-			req.body.servicePrice || existingService.servicePrice;
+		existingService.breakStartTime =
+			req.body.breakStartTime || existingService.breakStartTime;
+		existingService.breakEndTime =
+			req.body.breakEndTime || existingService.breakEndTime;
+		existingService.selectedDays =
+			req.body.selectedDays || existingService.selectedDays;
+		existingService.description =
+			req.body.description || existingService.description;
 
 		const updatedService = await existingService.save();
 
