@@ -17,7 +17,7 @@ function ServiceCard({ service, businessName, businessId }) {
 
 	return (
 		<div>
-			<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-8 rounded-2xl md:max-w-sm break-words group">
+			<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-6 rounded-2xl md:max-w-sm break-words group hover:scale-[1.02] duration-500 ease-in-out">
 				<div className="flex flex-col justify-center items-center gap-7">
 					<div className="flex flex-col space-y-4">
 						<div className="flex flex-col justify-center text-center">

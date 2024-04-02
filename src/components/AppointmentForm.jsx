@@ -8,7 +8,7 @@ import Button from "./Button";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Datepicker from "react-tailwindcss-datepicker";
+// import Datepicker from "react-tailwindcss-datepicker";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -115,16 +115,21 @@ function AppointmentForm() {
 		return slots;
 	};
 
-	const [value, setValue] = useState({
-		startDate: new Date(),
-		endDate: new Date().setMonth(11),
-	});
+	// const [value, setValue] = useState({
+	// 	startDate: new Date(),
+	// 	endDate: new Date().setMonth(11),
+	// });
 
-	const handleValueChange = (newValue) => {
-		console.log("newValue:", newValue);
-		setValue(newValue);
-	};
+	// const handleValueChange = (newValue) => {
+	// 	console.log("newValue:", newValue);
+	// 	setValue(newValue);
+	// };
+
 	const timing = `${service?.startTime} to ${service?.endTime}`;
+
+	if (!selectedUser) {
+		return null;
+	}
 
 	return (
 		<Layout>
@@ -166,7 +171,7 @@ function AppointmentForm() {
 				<h1 className="flex justify-center py-16 font-bebas font-semibold text-8xl text-indigo-500 tracking-wide">
 					BOOK YOUR APPOINTMENT.
 				</h1>
-				<div className="flex flex-col justify-center items-center gap-7 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-8 rounded-2xl md:max-w-sm break-words group">
+				<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-6 rounded-2xl md:max-w-sm break-words group hover:scale-[1.02] duration-500 ease-in-out">
 					<div className="flex flex-col space-y-4">
 						<div className="flex flex-col justify-center text-center">
 							<div className="font-poppins font-semibold text-base text-black">
@@ -180,7 +185,7 @@ function AppointmentForm() {
 						<div className="flex flex-col flex-wrap justify-center items-center serviceDetails">
 							<div className="flex space-x-4">
 								<div className="font-light font-muktaVaani text-black text-xs">
-									Duration: <strong>{service?.serviceDuration}</strong>
+									Duration: <strong>{service?.duration[0]}</strong>
 								</div>
 								<div className="font-light font-muktaVaani text-black text-xs">
 									Price: Rs. <strong>{service?.price}</strong>
@@ -209,19 +214,30 @@ function AppointmentForm() {
 							<div className="flex justify-center items-center space-x-12">
 								<div className="flex flex-col justify-center w-2/5">
 									<div className="flex flex-col space-y-4">
-										<div className="">
-											<Datepicker value={value} onChange={handleValueChange} />
-										</div>
 										<div>
-											<InputField
-												inputFieldName="nameForAppointment"
-												inputFieldLabelName="Name"
-												inputFieldId="nameForAppointment"
-												inputFieldType="text"
-												inputFieldPlaceholder="enter your name"
-												inputFieldHtmlFor="nameForAppointment"
-												isRequired={true}
-											/>
+											<div className="flex justify-between gap-4">
+												<div className="flex-grow w-3/5">
+													<InputField
+														inputFieldName="nameForAppointment"
+														inputFieldLabelName="Name"
+														inputFieldId="nameForAppointment"
+														inputFieldType="text"
+														inputFieldPlaceholder="enter your name"
+														inputFieldHtmlFor="nameForAppointment"
+														isRequired={true}
+													/>
+												</div>
+												<div className="flex-grow w-2/5">
+													<InputField
+														inputFieldType="date"
+														inputFieldName="appointmentDate"
+														inputFieldLabelName="Appointment Date"
+														inputFieldId="appointmentDate"
+														inputFieldHtmlFor="nameForAppointment"
+														isRequired={true}
+													/>
+												</div>
+											</div>
 
 											<InputField
 												inputFieldId="appointmentMessage"
@@ -229,7 +245,6 @@ function AppointmentForm() {
 												inputFieldPlaceholder="enter your message here"
 												inputFieldHtmlFor="appointmentMessage"
 												inputFieldLabelName="Message"
-												isRequired={true}
 												fieldType="textarea"
 												cols={10}
 												rows={5}
@@ -241,8 +256,11 @@ function AppointmentForm() {
 											>
 												<span id="typed-characters">0</span>
 												<span>/</span>
-												<span id="maximum-characters">500</span>
+												<span id="maximum-characters">300</span>
 											</div>
+										</div>
+										<div className="px-12">
+											<Button buttonName="BOOK NOW" />
 										</div>
 									</div>
 								</div>
@@ -262,9 +280,6 @@ function AppointmentForm() {
 										))}
 									</div>
 								</div>
-							</div>
-							<div className="px-52">
-								<Button buttonName="BOOK NOW" />
 							</div>
 						</div>
 					</form>

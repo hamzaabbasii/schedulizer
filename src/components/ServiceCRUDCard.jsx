@@ -6,36 +6,38 @@ function ServicesCRUDCard({ service, onDelete }) {
 		onDelete(service._id);
 	};
 
+	console.log("ServiceCRUDCard props:", { service, onDelete }); // Log the props
+
 	return (
-		<div className="flex items-center justify-center">
-			<div className="group relative w-full break-words rounded-xl bg-[#FAF8ED] shadow-xl md:max-w-sm">
+		<div className="flex justify-center items-center">
+			<div className="relative bg-[#FAF8ED] shadow-xl rounded-xl w-full md:max-w-sm break-words group">
 				<div className="p-6">
-					<div className="overflow-hidden text-center">
+					<div className="text-center overflow-hidden">
 						<div className="flex flex-col justify-center">
 							<div className="">
-								<h4 className="font-poppins text-lg font-bold text-[#18191E]">
-									{service.serviceName}
+								<h4 className="font-bold font-poppins text-[#18191E] text-lg">
+									{service.name}
 								</h4>
 							</div>
-							<div className="text-md flex flex-col items-center justify-center py-4">
-								<p className="font-muktaVaani text-sm font-normal text-gray-600">
-									Service Duration: {service.serviceDuration} <br />
+							<div className="flex flex-col justify-center items-center py-4 text-md">
+								<p className="font-muktaVaani font-normal text-gray-600 text-sm">
+									Service Duration: {service.duration[0]} <br />
 									Timings: {service.serviceTiming} <br />
-									Price: {service.servicePrice} <br />
-									Days: {service.serviceDays}
+									Price: {service.price} <br />
+									Days: {service.days}
 								</p>
 							</div>
 							<div className="flex flex-wrap justify-center">
-								<div className="businessDescription w-full px-2">
-									<p className="text-md mb-4 font-muktaVaani leading-relaxed text-[#18191E]">
-										{service.serviceDescription}
+								<div className="px-2 w-full businessDescription">
+									<p className="mb-4 font-muktaVaani text-[#18191E] text-md leading-relaxed">
+										{service.description}
 									</p>
 								</div>
-								<div className="flex w-full justify-evenly px-2">
-									<div className="appointmentButton pt-2">
+								<div className="flex justify-evenly px-2 w-full">
+									<div className="pt-2 appointmentButton">
 										<Button buttonName="DELETE" onClick={handleDelete} />
 									</div>
-									<div className="appointmentButton pt-2">
+									<div className="pt-2 appointmentButton">
 										<Button buttonName="UPDATE" onClick={handleDelete} />
 									</div>
 								</div>
@@ -50,12 +52,12 @@ function ServicesCRUDCard({ service, onDelete }) {
 
 ServicesCRUDCard.propTypes = {
 	service: PropTypes.shape({
-		serviceName: PropTypes.string.isRequired,
-		serviceDuration: PropTypes.string.isRequired,
-		servicePrice: PropTypes.number.isRequired,
+		name: PropTypes.string.isRequired,
+		duration: PropTypes.string.isRequired,
+		price: PropTypes.number.isRequired,
 		serviceTiming: PropTypes.string.isRequired,
-		serviceDescription: PropTypes.string.isRequired,
-		serviceDays: PropTypes.string.isRequired,
+		description: PropTypes.string.isRequired,
+		days: PropTypes.string.isRequired,
 		_id: PropTypes.string.isRequired,
 	}).isRequired,
 	onDelete: PropTypes.func.isRequired,

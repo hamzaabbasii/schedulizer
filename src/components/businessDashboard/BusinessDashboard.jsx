@@ -45,42 +45,6 @@ function BusinessDashboard() {
 						&ensp; {businessName}
 					</p>
 				</h2>
-				{/* <div className="flex xl:lg:flex-row sm:flex-col md:flex-col xs:flex-col justify-center items-top md:space-x-12 xl:lg:space-x-24 sm:space-y-12 md:space-y-16 xl:lg:space-y-0 xs:space-y-12 pt-6 pb-12">
-					<CustomerSatisfaction />
-					<div className="flex xl:lg:flex-row sm:flex-col md:flex-col xs:flex-col justify-evenly items-top md:space-x-12 xl:lg:space-x-20 sm:space-y-12 md:space-y-16 xl:lg:space-y-0 xs:space-y-12">
-						<DashboardAppointmentTracker />
-						<DashboardAppointmentsToday />
-					</div>
-				</div>
-				<div className="flex xl:lg:flex-row sm:flex-col md:flex-col xs:flex-col justify-between items-center sm:gap-y-12 md:gap-y-16 xs:gap-y-12 md:space-x-12 xl:lg:space-x-6 md:px-12 xl:lg:px-48">
-					<div className="bg-[#FAF8ED] shadow-indigo-800 shadow-sm px-12 py-6 rounded-xl">
-						<div className="mb-2 text-grey-darker">
-							<span className="align-top text-3xl">RS</span>
-							<span className="text-5xl">21,404</span>
-						</div>
-						<div className="text-grey text-sm uppercase tracking-wide">
-							Revenue This Month
-						</div>
-					</div>
-					<div className="bg-[#FAF8ED] shadow-indigo-800 shadow-sm px-12 py-6 rounded-xl">
-						<div className="mb-2 text-grey-darker">
-							<span className="align-top text-3xl">RS</span>
-							<span className="text-5xl">21,404</span>
-						</div>
-						<div className="text-grey text-sm uppercase tracking-wide">
-							Revenue This Month
-						</div>
-					</div>
-					<div className="bg-[#FAF8ED] shadow-indigo-800 shadow-sm px-12 py-6 rounded-xl">
-						<div className="mb-2 text-grey-darker">
-							<span className="align-top text-3xl">RS</span>
-							<span className="text-5xl">21,404</span>
-						</div>
-						<div className="text-grey text-sm uppercase tracking-wide">
-							Revenue This Month
-						</div>
-					</div>
-				</div> */}
 				<ServiceAddForm />
 				<ServicesCRUD />
 				<BacktoTopButton />
