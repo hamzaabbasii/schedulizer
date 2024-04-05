@@ -69,7 +69,7 @@ function Navbar() {
 			{" "}
 			<nav className="flex justify-between items-center space-x-2 lg:space-x-4">
 				<div className="flex flex-shrink-0 items-end">
-					<img src="/images/logo.png" alt="logo" className="mr-4 w-10 h-10" />
+					<img src="images/logo.png" alt="logo" className="mr-4 w-10 h-10" />
 					<Link to="/schedulizer/">
 						<span className="font-bebas font-medium text-3xl text-indigo-500 tracking-wide">
 							Schedulizer
