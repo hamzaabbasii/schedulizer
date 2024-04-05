@@ -15,6 +15,9 @@ import ProfilePicBio from "./components/ProfilePicBio.jsx";
 import Tests from "./components/Tests.jsx";
 import store from "./redux/store/store.js";
 import AppointmentForm from "./components/AppointmentForm.jsx";
+import BusinessServices from "./components/businessDashboard/BusinessServices.jsx";
+import BusinessAppointments from "./components/businessDashboard/BusinessAppointments.jsx";
+import BusinessAnalytics from "./components/businessDashboard/BusinessAnalytics.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
@@ -46,6 +49,18 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 					<Route
 						path="/schedulizer/appointmentform/:businessId/:serviceId"
 						element={<AppointmentForm />}
+					/>
+					<Route
+						path="/schedulizer/businessDashboard/:businessId/services"
+						element={<BusinessServices />}
+					/>
+					<Route
+						path="/schedulizer/businessDashboard/:businessId/appointments"
+						element={<BusinessAppointments />}
+					/>
+					<Route
+						path="/schedulizer/businessDashboard/:businessId/analytics"
+						element={<BusinessAnalytics />}
 					/>
 				</Routes>
 			</BrowserRouter>

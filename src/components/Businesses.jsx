@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import BackToTopButton from "./BacktoTopButton";
 import BusinessCard from "./BusinessCard";
 import Filters from "./Filters";
 import Layout from "./Layout";
@@ -28,17 +27,16 @@ function Businesses() {
 	return (
 		<Layout>
 			<Filters />
-			<div className="px-20 pb-12 pt-20">
-				<h1 className="flex justify-center py-16 font-bebas text-6xl font-semibold tracking-wide text-indigo-500">
+			<div className="pt-36 pb-12">
+				<h1 className="flex justify-center font-bebas font-semibold text-8xl text-indigo-500 tracking-wide">
 					BUSINESSES.
 				</h1>
-				<div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-16">
+				<div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-16 py-12">
 					{businesses.map((business, index) => (
 						<BusinessCard key={index} business={business} />
 					))}
 				</div>
 			</div>
-			<BackToTopButton />
 		</Layout>
 	);
 }

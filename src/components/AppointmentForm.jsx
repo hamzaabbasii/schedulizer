@@ -3,7 +3,7 @@
 import Layout from "./Layout";
 import InputField from "./form/InputField";
 import { useEffect, useRef, useState, Fragment } from "react";
-import TimeSlotSelectorButton from "./TimeSlotSelectorButton";
+import TimeSlotSelectorButton from "./Form/TimeSlotSelectorButton";
 import Button from "./Button";
 import moment from "moment";
 import { useParams } from "react-router-dom";

@@ -16,44 +16,43 @@ function ServiceCard({ service, businessName, businessId }) {
 	const timing = `${service?.startTime} to ${service?.endTime}`;
 
 	return (
-		<div>
-			<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-6 rounded-2xl md:max-w-sm break-words group hover:scale-[1.02] duration-500 ease-in-out">
-				<div className="flex flex-col justify-center items-center gap-7">
-					<div className="flex flex-col space-y-4">
-						<div className="flex flex-col justify-center text-center">
-							<div className="font-poppins font-semibold text-base text-black">
-								{service.title}
-							</div>
-							<div className="font-light font-muktaVaani text-black text-sm">
-								by <strong>{businessName}</strong>
-							</div>
+		<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-6 rounded-2xl md:max-w-sm break-words group hover:scale-[1.02] duration-500 ease-in-out">
+			<div className="flex flex-col justify-center items-center gap-7">
+				<div className="flex flex-col space-y-4">
+					<div className="flex flex-col justify-center text-center">
+						<div className="font-poppins font-semibold text-base text-black">
+							{service.title}
 						</div>
-
-						<div className="flex flex-wrap justify-center items-center space-x-4 serviceDetails">
-							<div className="font-light font-muktaVaani text-black text-xs">
-								Duration: <strong>{service.duration[0]}</strong>
-							</div>
-							<div className="font-light font-muktaVaani text-black text-xs">
-								Price: Rs. <strong>{service.price}</strong>
-							</div>
-							<div className="font-light font-muktaVaani text-black text-xs">
-								Timings: <strong>{timing}</strong>
-							</div>
-							<div className="font-light font-muktaVaani text-black text-xs">
-								Days: <strong>{service.days}</strong>
-							</div>
+						<div className="font-extralight font-muktaVaani text-black text-sm">
+							by <span className="font-light">{businessName}</span>
 						</div>
 					</div>
 
-					<div className="font-muktaVaani font-normal text-black text-center text-sm break-words description">
-						{service.description.substring(0, 250)}
+					<div className="flex flex-wrap justify-center items-center space-x-4 font-muktaVaani text-black text-xs serviceDetails">
+						<div>
+							Duration:{" "}
+							<span className="font-semibold">{service.duration[0]}</span>
+						</div>
+						<div>
+							Price: <span className="font-semibold">Rs.{service.price}</span>
+						</div>
+						<div>
+							Timings: <span className="font-semibold">{timing}</span>
+						</div>
+						<div>
+							Days: <span className="font-semibold">{service.days}</span>
+						</div>
 					</div>
-					<div className="pt-2 appointmentButton">
-						<Button
-							buttonName="BOOK APPOINTMENT"
-							buttonLink={`/schedulizer/appointmentform/${businessId}/${service._id}`}
-						/>
-					</div>
+				</div>
+
+				<div className="font-muktaVaani font-normal text-black text-center text-sm break-words description">
+					{service.description.substring(0, 250)}
+				</div>
+				<div className="pt-2 appointmentButton">
+					<Button
+						buttonName="BOOK APPOINTMENT"
+						buttonLink={`/schedulizer/appointmentform/${businessId}/${service._id}`}
+					/>
 				</div>
 			</div>
 		</div>
@@ -63,7 +62,7 @@ function ServiceCard({ service, businessName, businessId }) {
 ServiceCard.propTypes = {
 	service: PropTypes.shape({
 		title: PropTypes.string.isRequired,
-		duration: PropTypes.string.isRequired,
+		duration: PropTypes.array.isRequired,
 		price: PropTypes.number.isRequired,
 		serviceTiming: PropTypes.string.isRequired,
 		description: PropTypes.string.isRequired,

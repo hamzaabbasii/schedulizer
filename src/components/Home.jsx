@@ -1,4 +1,3 @@
-import BackToTopButton from "./BacktoTopButton";
 import Button from "./Button";
 import Layout from "./Layout";
 import Team from "./Team";
@@ -19,35 +18,35 @@ function Home() {
 
 	return (
 		<Layout>
-			<div className="flex flex-col overflow-hidden rounded-b-3xl pb-32 pt-52">
+			<div className="flex flex-col pt-52 pb-32 rounded-b-3xl overflow-hidden">
 				<div className="heroText">
-					<h2 className="exclusive px-8 text-center font-poppins text-4xl font-light sm:px-32 sm:text-start">
+					<h2 className="px-8 sm:px-32 font-light font-poppins text-4xl text-center sm:text-start exclusive">
 						Exclusive Agency For
 					</h2>
-					<h1 className="appointment mt-6 text-center font-bebas text-4xl font-semibold tracking-wide text-indigo-500 sm:text-6xl md:text-8xl lg:text-[10rem] xl:text-[10rem]">
+					<h1 className="mt-6 font-bebas font-semibold text-4xl text-center text-indigo-500 sm:text-6xl md:text-8xl lg:text-[10rem] xl:text-[10rem] tracking-wide appointment">
 						Appointment Scheduling
 					</h1>
-					<h2 className="solution px-8 text-center font-poppins text-4xl font-light sm:px-32 sm:text-right">
+					<h2 className="sm:text-right px-8 sm:px-32 font-light font-poppins text-4xl text-center solution">
 						Solutions
 					</h2>
 				</div>
-				<div className="items-center justify-center pt-24 sm:space-y-6 md:flex-col lg:flex">
-					<div className="xs:px-16 md:px-32 xl:px-64">
+				<div className="lg:flex md:flex-col justify-center items-center sm:space-y-6 pt-24">
+					<div className="md:px-32 xl:px-64 xs:px-16">
 						<Button
 							buttonName="GET STARTED"
 							buttonLink="/schedulizer/services"
 						/>
 					</div>
-					<p className="justify-center px-4 text-center font-muktaVaani text-lg font-extralight italic">
+					<p className="justify-center px-4 font-extralight font-muktaVaani text-center text-lg italic">
 						by looking at the services provided on our platform and find the
 						right match for your needs
 					</p>
 				</div>
 			</div>
 
-			<div className="mx-auto items-center justify-center py-6">
+			<div className="justify-center items-center mx-auto py-6">
 				<div className="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32">
-					<h1 className="md:text-10xl text-center font-bebas text-8xl font-semibold tracking-wide text-indigo-500 sm:text-9xl lg:text-8xl xl:text-8xl">
+					<h1 className="font-bebas font-semibold text-8xl text-center text-indigo-500 sm:text-9xl md:text-10xl lg:text-8xl xl:text-8xl tracking-wide">
 						Meet the team.
 					</h1>
 					<Team />
@@ -64,11 +63,11 @@ function Home() {
 				</svg> */}
 			</div>
 
-			<div className="overflow-hidden rounded-t-3xl px-8 py-20">
-				<h1 className="md:text-10xl text-center font-bebas text-8xl font-semibold tracking-wide text-indigo-500 sm:text-9xl lg:text-8xl xl:text-8xl">
+			<div className="px-8 py-20 rounded-t-3xl overflow-hidden">
+				<h1 className="font-bebas font-semibold text-8xl text-center text-indigo-500 sm:text-9xl md:text-10xl lg:text-8xl xl:text-8xl tracking-wide">
 					About Our Web App.
 				</h1>
-				<div className="text-md px-72 py-12 font-muktaVaani">
+				<div className="px-72 py-12 font-muktaVaani text-md">
 					<p>
 						Our project revolves around the creation of a cutting-edge
 						scheduling web application tailored to the needs of local and small
@@ -99,7 +98,6 @@ function Home() {
 					</p>
 				</div>
 			</div>
-			<BackToTopButton />
 		</Layout>
 	);
 }

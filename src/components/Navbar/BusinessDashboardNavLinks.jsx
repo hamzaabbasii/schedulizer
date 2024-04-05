@@ -13,9 +13,18 @@ function BusinessDashboardNavLinks() {
 
 	const links = [
 		{ path: `/schedulizer/businessDashboard/${businessId}`, name: "dashboard" },
-		{ path: "/schedulizer/businessDashboard/", name: "your services" },
-		{ path: "/schedulizer/businessDashboard/", name: "appointments" },
-		{ path: "/schedulizer/businessDashboard/", name: "analytics" },
+		{
+			path: `/schedulizer/businessDashboard/${businessId}/services`,
+			name: "your services",
+		},
+		{
+			path: `/schedulizer/businessDashboard/${businessId}/appointments`,
+			name: "appointments",
+		},
+		{
+			path: `/schedulizer/businessDashboard/${businessId}/analytics`,
+			name: "analytics",
+		},
 	];
 
 	return (

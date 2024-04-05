@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 
 function BusinessInfo() {
 	const { businessId } = useParams();
-	console.log("businessId: ", businessId);
 	const [business, setBusiness] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [services, setServices] = useState([]);
@@ -34,13 +33,13 @@ function BusinessInfo() {
 					throw new Error(`HTTP error! status: ${servicesResponse.status}`);
 				}
 				const servicesData = await servicesResponse.json();
-				console.log("Business email: ", data.businessEmail);
+				console.log("Business email: ", data.workEmail);
 				servicesData.data.forEach((service) => {
 					console.log("Service business email: ", service.businessEmail);
 				});
 
 				const matchingServices = servicesData.data.filter(
-					(service) => service.businessEmail === data.businessEmail
+					(service) => service.businessEmail === data.workEmail
 				);
 				console.log("matching services:", matchingServices);
 				setServices(matchingServices);
@@ -59,11 +58,11 @@ function BusinessInfo() {
 
 	return (
 		<Layout>
-			<div className="flex flex-col justify-center px-32 py-12 h-auto">
-				<h1 className="flex justify-center py-16 font-bebas font-semibold text-8xl text-indigo-500 tracking-wide">
+			<div className="pt-32 pb-12">
+				<h1 className="flex justify-center font-bebas font-semibold text-8xl text-indigo-500 tracking-wide">
 					BUSINESS INFO.
 				</h1>
-				<div className="flex justify-center items-center space-x-6">
+				<div className="flex justify-center items-center space-x-6 py-12">
 					<div className="flex justify-center items-center gap-5 space-x-12 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-8 rounded-2xl break-words group">
 						<div className="flex flex-col justify-center items-center space-y-4">
 							<img
@@ -94,16 +93,16 @@ function BusinessInfo() {
 					</div>
 				</div>
 				<div className="py-12">
-					<h1 className="flex justify-center py-16 font-bebas font-semibold text-8xl text-indigo-500 tracking-wide">
+					<h1 className="flex justify-center font-bebas font-semibold text-6xl text-indigo-500 tracking-wide">
 						SERVICES.
 					</h1>
-					<div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-16 px-12">
+					<div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-16 py-12">
 						{services &&
 							services.map((service, index) => (
 								<ServiceCard
 									key={index}
 									service={service}
-									businessName={business.businessName}
+									businessName={business.name}
 								/>
 							))}
 					</div>

@@ -5,8 +5,9 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Dropdown from "../form/Dropdown";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
-function ServiceAddForm() {
+function ServiceAddForm({ onAdd }) {
 	const [serviceTitle, setServiceTitle] = useState("");
 	const [serviceDuration, setServiceDuration] = useState(["", 0]);
 	const [servicePrice, setServicePrice] = useState("");
@@ -193,21 +194,17 @@ function ServiceAddForm() {
 
 		try {
 			const response = await axios.post("/services/add", serviceData);
-			// console.log(response.data);
 
-			// Check if the form submission was successful
 			if (response.data.success) {
 				setIsLoading(false);
+				onAdd(); // Call the onAdd prop
 			} else {
 				setIsLoading(false);
 			}
 		} catch (error) {
-			// console.log("error data", error.response?.data);
-			// console.log("Form data", serviceData);
 			setIsLoading(false);
 			setError(error.response.data.error);
 			setApiError(error.response?.data || "An error occurred");
-			console.log("error", error);
 		}
 	};
 
@@ -226,245 +223,244 @@ function ServiceAddForm() {
 	// ]);
 
 	return (
-		<div className="flex justify-center items-center py-28">
-			<div className="flex flex-col justify-center">
-				<div className="md:w-full lg:w-[600px] xl:w-[800px]">
-					<h2 className="flex justify-center items-center mb-12 md:px-24 xl:lg:px-12 font-bebas font-semibold text-8xl text-indigo-500">
-						Add a Service.
-					</h2>
-					<form onSubmit={handleSubmit} className="">
-						<div className="space-y-4 mt-12">
-							<div className="justify-center space-x-4 grid grid-cols-5 w-full">
-								<div className="col-span-5">
-									<InputField
-										inputFieldId="serviceTitle"
-										inputFieldType="text"
-										inputFieldPlaceholder="service title"
-										inputFieldHtmlFor="serviceTitle"
-										inputFieldLabelName="Title"
-										isRequired={true}
-										fieldType="input"
-										value={serviceTitle}
-										onChange={(e) => setServiceTitle(e.target.value)}
-										validateOnBlur={true}
-										validate={(value) =>
-											validateField(
-												value,
-												isAlphabetic,
-												"Business name should only contain alphabets",
-												"serviceTitle",
-												"Service Title" // pass the label name here
-											)
-										}
-										inputFieldError={error.serviceTitle}
-									/>
-								</div>
-							</div>
-
-							<div className="gap-4 grid grid-flow-col w-full">
-								<div className="">
-									<Dropdown
-										dropdownbuttonname="select duration"
-										dropdownlabelname="Duration"
-										dropdownlistLength={6}
-										dropdownlabelhtmlfor="employeesno"
-										dropdownliname1="15 mins"
-										dropdownliname2="30 mins"
-										dropdownliname3="45 mins"
-										dropdownliname4="1 hour"
-										dropdownliname5="2 hours"
-										dropdownliname6="4 hours"
-										onOptionSelect={handleDurationSelect}
-										dropdownError={error.durationUnit}
-										value={serviceDuration}
-										onChange={(e) => setServiceDuration(e.target.value)}
-										dropdownOptions={durationsList}
-									/>
-								</div>
-								<div className="">
-									<InputField
-										inputFieldId="servicePrice"
-										inputFieldType="text"
-										inputFieldPlaceholder="service price"
-										inputFieldHtmlFor="servicePrice"
-										inputFieldLabelName="Price"
-										isRequired={true}
-										fieldType="input"
-										value={servicePrice}
-										onChange={(e) => {
-											const value = parseFloat(e.target.value);
-											if (!isNaN(value) && value >= 0) {
-												setServicePrice(e.target.value);
-											}
-										}}
-										validateOnBlur={true}
-										validate={(value) =>
-											validateField(
-												value,
-												isPrice,
-												"Service price must be a non-negative integer of no more than 5 digits",
-												"servicePrice",
-												"Service Price"
-											)
-										}
-										inputFieldError={error.servicePrice}
-									/>
-								</div>
-
-								<div className="">
-									<InputField
-										inputFieldId="serviceStartTime"
-										inputFieldType="time"
-										inputFieldPlaceholder="xx am/pm"
-										inputFieldHtmlFor="serviceStartTime"
-										inputFieldLabelName="Start Time"
-										isRequired={true}
-										fieldType="input"
-										value={serviceStartTime}
-										onChange={(e) =>
-											setServiceStartTime(convertTo12Hour(e.target.value))
-										}
-										validateOnBlur={true}
-										validate={(value) =>
-											validateField(
-												value,
-												isNotEmpty,
-												"Service start time is required",
-												"serviceStartTime",
-												"Service Start Time"
-											)
-										}
-										inputFieldError={error.serviceStartTime}
-									/>
-								</div>
-
-								<div className="">
-									<InputField
-										inputFieldId="serviceEndTime"
-										inputFieldType="time"
-										inputFieldPlaceholder="xx am/pm"
-										inputFieldHtmlFor="serviceEndTime"
-										inputFieldLabelName="End Time"
-										isRequired={true}
-										fieldType="input"
-										value={convertTo12Hour(serviceEndTime)}
-										onChange={(e) =>
-											setServiceEndTime(convertTo12Hour(e.target.value))
-										}
-										validateOnBlur={true}
-										validate={(value) =>
-											validateField(
-												value,
-												isNotEmpty,
-												"Service end time is required",
-												"serviceEndTime",
-												"Service End Time"
-											)
-										}
-										inputFieldError={error.serviceEndTime}
-									/>
-								</div>
-
-								<div className="">
-									<InputField
-										inputFieldId="breakStartTime"
-										inputFieldType="time"
-										inputFieldPlaceholder="xx am/pm"
-										inputFieldHtmlFor="breakStartTime"
-										inputFieldLabelName="Break Start Time"
-										isRequired={false}
-										fieldType="input"
-										value={convertTo12Hour(breakStartTime)}
-										onChange={(e) =>
-											setBreakStartTime(convertTo12Hour(e.target.value))
-										}
-										validateOnBlur={true}
-										inputFieldError={error.breakStartTime}
-									/>
-								</div>
-
-								<div className="">
-									<InputField
-										inputFieldId="breakEndTime"
-										inputFieldType="time"
-										inputFieldPlaceholder="xx am/pm"
-										inputFieldHtmlFor="breakEndTime"
-										inputFieldLabelName="Break End Time"
-										isRequired={false}
-										fieldType="input"
-										value={convertTo12Hour(breakEndTime)}
-										onChange={(e) =>
-											setBreakEndTime(convertTo12Hour(e.target.value))
-										}
-										validateOnBlur={true}
-										inputFieldError={error.breakEndTime}
-									/>
-								</div>
-							</div>
-
-							<CheckboxList
-								onItemsChange={handleDaysSelect}
-								label="Select Days"
-								items={["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]}
-								checkboxFor="serviceDays"
-							/>
-							{error.selectedDays && (
-								<p className="mt-1 font-poppins text-red-500 text-xs">
-									{error.selectedDays}
-								</p>
-							)}
-
-							<InputField
-								inputFieldId="serviceDescription"
-								inputFieldType="text"
-								inputFieldPlaceholder="service description"
-								inputFieldHtmlFor="serviceDescription"
-								inputFieldLabelName="Description"
-								isRequired={true}
-								fieldType="textarea"
-								cols={10}
-								rows={5}
-								maxLength={500}
-								value={serviceDescription}
-								onChange={(e) => setServiceDescription(e.target.value)}
-								validateOnBlur={true}
-								validate={(value) =>
-									validateField(
-										value,
-										isTextDescription,
-										"Service description should be atleast 100 characters.",
-										"serviceDescription",
-										"Service Description"
-									)
-								}
-								inputFieldError={error.serviceDescription}
-							/>
-							<div
-								id="character-counter"
-								className="text-right opacity-80 text-indigo-500 text-sm"
-							>
-								<span id="typed-characters">0</span>
-								<span>/</span>
-								<span id="maximum-characters">500</span>
+		<div className="flex flex-col justify-center items-center">
+			<div className="md:w-full lg:w-[600px] xl:w-[800px]">
+				<form onSubmit={handleSubmit}>
+					<div className="space-y-4 mt-12">
+						<div className="justify-center space-x-4 grid grid-cols-5 w-full">
+							<div className="col-span-5">
+								<InputField
+									inputFieldId="serviceTitle"
+									inputFieldType="text"
+									inputFieldPlaceholder="service title"
+									inputFieldHtmlFor="serviceTitle"
+									inputFieldLabelName="Title"
+									isRequired={true}
+									fieldType="input"
+									value={serviceTitle}
+									onChange={(e) => setServiceTitle(e.target.value)}
+									validateOnBlur={true}
+									validate={(value) =>
+										validateField(
+											value,
+											isAlphabetic,
+											"Business name should only contain alphabets",
+											"serviceTitle",
+											"Service Title" // pass the label name here
+										)
+									}
+									inputFieldError={error.serviceTitle}
+								/>
 							</div>
 						</div>
-						{serverError && (
+
+						<div className="gap-4 grid grid-flow-col w-full">
+							<div className="">
+								<Dropdown
+									dropdownbuttonname="select duration"
+									dropdownlabelname="Duration"
+									dropdownlistLength={6}
+									dropdownlabelhtmlfor="employeesno"
+									dropdownliname1="15 mins"
+									dropdownliname2="30 mins"
+									dropdownliname3="45 mins"
+									dropdownliname4="1 hour"
+									dropdownliname5="2 hours"
+									dropdownliname6="4 hours"
+									onOptionSelect={handleDurationSelect}
+									dropdownError={error.durationUnit}
+									value={serviceDuration}
+									onChange={(e) => setServiceDuration(e.target.value)}
+									dropdownOptions={durationsList}
+								/>
+							</div>
+							<div className="">
+								<InputField
+									inputFieldId="servicePrice"
+									inputFieldType="text"
+									inputFieldPlaceholder="service price"
+									inputFieldHtmlFor="servicePrice"
+									inputFieldLabelName="Price"
+									isRequired={true}
+									fieldType="input"
+									value={servicePrice}
+									onChange={(e) => {
+										const value = parseFloat(e.target.value);
+										if (!isNaN(value) && value >= 0) {
+											setServicePrice(e.target.value);
+										}
+									}}
+									validateOnBlur={true}
+									validate={(value) =>
+										validateField(
+											value,
+											isPrice,
+											"Service price must be a non-negative integer of no more than 5 digits",
+											"servicePrice",
+											"Service Price"
+										)
+									}
+									inputFieldError={error.servicePrice}
+								/>
+							</div>
+
+							<div className="">
+								<InputField
+									inputFieldId="serviceStartTime"
+									inputFieldType="time"
+									inputFieldPlaceholder="xx am/pm"
+									inputFieldHtmlFor="serviceStartTime"
+									inputFieldLabelName="Start Time"
+									isRequired={true}
+									fieldType="input"
+									value={serviceStartTime}
+									onChange={(e) =>
+										setServiceStartTime(convertTo12Hour(e.target.value))
+									}
+									validateOnBlur={true}
+									validate={(value) =>
+										validateField(
+											value,
+											isNotEmpty,
+											"Service start time is required",
+											"serviceStartTime",
+											"Service Start Time"
+										)
+									}
+									inputFieldError={error.serviceStartTime}
+								/>
+							</div>
+
+							<div className="">
+								<InputField
+									inputFieldId="serviceEndTime"
+									inputFieldType="time"
+									inputFieldPlaceholder="xx am/pm"
+									inputFieldHtmlFor="serviceEndTime"
+									inputFieldLabelName="End Time"
+									isRequired={true}
+									fieldType="input"
+									value={convertTo12Hour(serviceEndTime)}
+									onChange={(e) =>
+										setServiceEndTime(convertTo12Hour(e.target.value))
+									}
+									validateOnBlur={true}
+									validate={(value) =>
+										validateField(
+											value,
+											isNotEmpty,
+											"Service end time is required",
+											"serviceEndTime",
+											"Service End Time"
+										)
+									}
+									inputFieldError={error.serviceEndTime}
+								/>
+							</div>
+
+							<div className="">
+								<InputField
+									inputFieldId="breakStartTime"
+									inputFieldType="time"
+									inputFieldPlaceholder="xx am/pm"
+									inputFieldHtmlFor="breakStartTime"
+									inputFieldLabelName="Break Start Time"
+									isRequired={false}
+									fieldType="input"
+									value={convertTo12Hour(breakStartTime)}
+									onChange={(e) =>
+										setBreakStartTime(convertTo12Hour(e.target.value))
+									}
+									validateOnBlur={true}
+									inputFieldError={error.breakStartTime}
+								/>
+							</div>
+
+							<div className="">
+								<InputField
+									inputFieldId="breakEndTime"
+									inputFieldType="time"
+									inputFieldPlaceholder="xx am/pm"
+									inputFieldHtmlFor="breakEndTime"
+									inputFieldLabelName="Break End Time"
+									isRequired={false}
+									fieldType="input"
+									value={convertTo12Hour(breakEndTime)}
+									onChange={(e) =>
+										setBreakEndTime(convertTo12Hour(e.target.value))
+									}
+									validateOnBlur={true}
+									inputFieldError={error.breakEndTime}
+								/>
+							</div>
+						</div>
+
+						<CheckboxList
+							onItemsChange={handleDaysSelect}
+							label="Select Days"
+							items={["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]}
+							checkboxFor="serviceDays"
+						/>
+						{error.selectedDays && (
 							<p className="mt-1 font-poppins text-red-500 text-xs">
-								{serverError}
+								{error.selectedDays}
 							</p>
 						)}
-						<div className="md:px-32 xl:px-64 xs:px-16 py-8">
-							<Button
-								buttonName="ADD SERVICE"
-								buttonType="submit"
-								disabled={isLoading}
-							/>
+
+						<InputField
+							inputFieldId="serviceDescription"
+							inputFieldType="text"
+							inputFieldPlaceholder="service description"
+							inputFieldHtmlFor="serviceDescription"
+							inputFieldLabelName="Description"
+							isRequired={true}
+							fieldType="textarea"
+							cols={10}
+							rows={5}
+							maxLength={500}
+							value={serviceDescription}
+							onChange={(e) => setServiceDescription(e.target.value)}
+							validateOnBlur={true}
+							validate={(value) =>
+								validateField(
+									value,
+									isTextDescription,
+									"Service description should be atleast 100 characters.",
+									"serviceDescription",
+									"Service Description"
+								)
+							}
+							inputFieldError={error.serviceDescription}
+						/>
+						<div
+							id="character-counter"
+							className="text-right opacity-80 text-indigo-500 text-sm"
+						>
+							<span id="typed-characters">0</span>
+							<span>/</span>
+							<span id="maximum-characters">500</span>
 						</div>
-					</form>
-				</div>
+					</div>
+					{serverError && (
+						<p className="mt-1 font-poppins text-red-500 text-xs">
+							{serverError}
+						</p>
+					)}
+					<div className="md:px-32 xl:px-64 xs:px-16 py-8">
+						<Button
+							buttonName="ADD SERVICE"
+							buttonType="submit"
+							disabled={isLoading}
+						/>
+					</div>
+				</form>
 			</div>
 		</div>
 	);
 }
+
+ServiceAddForm.propTypes = {
+	onAdd: PropTypes.func.isRequired,
+};
 
 export default ServiceAddForm;

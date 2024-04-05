@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Layout from "./Layout";
 import Filters from "./Filters";
 import ServiceCard from "./ServiceCard";
-import BackToTopButton from "./BacktoTopButton";
 
 function Services() {
 	const [services, setServices] = useState([]);
@@ -44,11 +43,11 @@ function Services() {
 	return (
 		<Layout>
 			<Filters />
-			<div className="px-20 pt-20 pb-12">
-				<h1 className="flex justify-center py-16 font-bebas font-semibold text-6xl text-indigo-500 tracking-wide">
+			<div className="pt-36 pb-12">
+				<h1 className="flex justify-center font-bebas font-semibold text-8xl text-indigo-500 tracking-wide">
 					SERVICES.
 				</h1>
-				<div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-16">
+				<div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-16 py-12">
 					{services.map((service, index) => {
 						if (
 							Array.isArray(service.businessId) &&
@@ -74,7 +73,6 @@ function Services() {
 					})}
 				</div>
 			</div>
-			<BackToTopButton />
 		</Layout>
 	);
 }
