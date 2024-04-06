@@ -15,7 +15,7 @@ function Services() {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
 				const { data } = await response.json();
-				console.log("services data:", data);
+				// console.log("services data:", data);
 				setServices(data);
 			} catch (error) {
 				console.error("Fetch error for services: ", error);

@@ -9,7 +9,7 @@ function ServicesCRUDCard({ service, onDelete, onEdit }) {
 		onEdit();
 	};
 
-	console.log("ServiceCRUDCard props:", { service, onDelete }); // Log the props
+	// console.log("ServiceCRUDCard props:", { service, onDelete }); // Log the props
 	const timing = `${service?.startTime} to ${service?.endTime}`;
 
 	return (
@@ -67,7 +67,6 @@ ServicesCRUDCard.propTypes = {
 		title: PropTypes.string.isRequired,
 		duration: PropTypes.array.isRequired,
 		price: PropTypes.number.isRequired,
-		serviceTiming: PropTypes.string.isRequired,
 		description: PropTypes.string.isRequired,
 		days: PropTypes.string.isRequired,
 		_id: PropTypes.string.isRequired,

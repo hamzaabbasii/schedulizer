@@ -7,7 +7,7 @@ import Dropdown from "../form/Dropdown";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-function ServiceAddForm({ onAdd }) {
+function ServiceAddForm({ service, onAdd, isModalOpen, setIsModalOpen }) {
 	const [serviceTitle, setServiceTitle] = useState("");
 	const [serviceDuration, setServiceDuration] = useState(["", 0]);
 	const [servicePrice, setServicePrice] = useState("");
@@ -17,23 +17,38 @@ function ServiceAddForm({ onAdd }) {
 	const [selectedDays, setSelectedDays] = useState("");
 	const [breakStartTime, setBreakStartTime] = useState("");
 	const [breakEndTime, setBreakEndTime] = useState("");
+	const [serviceType, setServiceType] = useState("");
+
+	useEffect(() => {
+		if (service) {
+			setServiceTitle(service.title);
+			setServiceDuration(service.duration);
+			setServicePrice(service.price);
+			setServiceStartTime(service.startTime);
+			setServiceEndTime(service.endTime);
+			setServiceDescription(service.description);
+			setSelectedDays(service.days);
+			setBreakStartTime(service.breakStartTime);
+			setBreakEndTime(service.breakEndTime);
+			setServiceType(service.type);
+		} else {
+			setServiceTitle("");
+			setServiceDuration(["", 0]);
+			setServicePrice("");
+			setServiceStartTime("");
+			setServiceEndTime("");
+			setServiceDescription("");
+			setSelectedDays("");
+			setBreakStartTime("");
+			setBreakEndTime("");
+			setServiceType("");
+		}
+	}, [service]);
 
 	const selectedBusiness = useSelector((state) => state.business.businessData);
 	const businessEmail = selectedBusiness?.workEmail;
 	const businessId = selectedBusiness?._id;
 	const [serverError, setApiError] = useState("");
-
-	// console.log("selectedBusiness", businessEmail);
-
-	// function convertTo24Hour(time) {
-	// 	const [hour, minute] = time.split(":");
-	// 	const period = time.includes("PM") ? "PM" : "AM";
-	// 	return (
-	// 		(period === "PM" ? (hour % 12) + 12 : hour) +
-	// 		":" +
-	// 		minute.replace(/\s[AP]M$/, "")
-	// 	);
-	// }
 
 	function convertTo12Hour(time) {
 		const [hour, minute] = time.split(":");
@@ -72,6 +87,10 @@ function ServiceAddForm({ onAdd }) {
 		setServiceDuration([value, durationValue]);
 	};
 
+	const handleServiceTypeSelect = (value) => {
+		setServiceType(value);
+	};
+
 	const durationsList = [
 		"15 mins",
 		"30 mins",
@@ -80,6 +99,8 @@ function ServiceAddForm({ onAdd }) {
 		"2 hours",
 		"4 hours",
 	];
+
+	const serviceTypes = ["physical", "online"];
 
 	const isAlphabetic = (value) => /^[A-Za-z\s&]+$/.test(value);
 	// const isNumeric = (value) => /^\d{1,2}$/.test(value);
@@ -163,7 +184,7 @@ function ServiceAddForm({ onAdd }) {
 		setSelectedDays(formattedDays);
 	};
 
-	const handleSubmit = async (event) => {
+	const handleAdd = async (event) => {
 		setIsLoading(true);
 		event.preventDefault();
 
@@ -179,6 +200,7 @@ function ServiceAddForm({ onAdd }) {
 			selectedDays,
 			serviceDescription,
 			businessEmail,
+			serviceType,
 		};
 
 		console.log("serviceData", serviceData);
@@ -205,39 +227,30 @@ function ServiceAddForm({ onAdd }) {
 			setIsLoading(false);
 			setError(error.response.data.error);
 			setApiError(error.response?.data || "An error occurred");
+			console.error("Fetch error: ", error);
 		}
 	};
-
-	// console.log("service data:", [
-	// 	serviceTitle,
-	// 	serviceDuration,
-	// 	servicePrice,
-	// 	serviceStartTime,
-	// 	serviceEndTime,
-	// 	breakStartTime,
-	// 	breakEndTime,
-	// 	selectedDays,
-	// 	serviceDescription,
-	// 	businessEmail,
-	// 	businessId,
-	// ]);
 
 	return (
 		<div className="flex flex-col justify-center items-center">
 			<div className="md:w-full lg:w-[600px] xl:w-[800px]">
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={handleAdd}>
 					<div className="space-y-4 mt-12">
 						<div className="justify-center space-x-4 grid grid-cols-5 w-full">
-							<div className="col-span-5">
+							<div className="col-span-4">
 								<InputField
 									inputFieldId="serviceTitle"
 									inputFieldType="text"
-									inputFieldPlaceholder="service title"
+									inputFieldPlaceholder={
+										service && service.title ? service.title : "service title"
+									}
 									inputFieldHtmlFor="serviceTitle"
 									inputFieldLabelName="Title"
 									isRequired={true}
 									fieldType="input"
-									value={serviceTitle}
+									value={
+										service && service.title ? service.title : serviceTitle
+									}
 									onChange={(e) => setServiceTitle(e.target.value)}
 									validateOnBlur={true}
 									validate={(value) =>
@@ -252,33 +265,46 @@ function ServiceAddForm({ onAdd }) {
 									inputFieldError={error.serviceTitle}
 								/>
 							</div>
+
+							<div className="col-span-1">
+								<Dropdown
+									dropdownbuttonname="select type"
+									dropdownlabelname="Type"
+									dropdownlabelhtmlfor="serviceType"
+									onOptionSelect={handleServiceTypeSelect}
+									dropdownError={error.serviceType}
+									value={serviceType}
+									onChange={(e) => setServiceType(e.target.value)}
+									dropdownOptions={serviceTypes}
+								/>
+							</div>
 						</div>
 
 						<div className="gap-4 grid grid-flow-col w-full">
 							<div className="">
 								<Dropdown
-									dropdownbuttonname="select duration"
+									dropdownbuttonname={
+										service && service.duration[0]
+											? service.duration[0]
+											: "select duration"
+									}
 									dropdownlabelname="Duration"
-									dropdownlistLength={6}
-									dropdownlabelhtmlfor="employeesno"
-									dropdownliname1="15 mins"
-									dropdownliname2="30 mins"
-									dropdownliname3="45 mins"
-									dropdownliname4="1 hour"
-									dropdownliname5="2 hours"
-									dropdownliname6="4 hours"
+									dropdownlabelhtmlfor="serviceDuration"
 									onOptionSelect={handleDurationSelect}
-									dropdownError={error.durationUnit}
+									dropdownError={error.serviceDuration}
 									value={serviceDuration}
 									onChange={(e) => setServiceDuration(e.target.value)}
 									dropdownOptions={durationsList}
 								/>
 							</div>
+
 							<div className="">
 								<InputField
 									inputFieldId="servicePrice"
 									inputFieldType="text"
-									inputFieldPlaceholder="service price"
+									inputFieldPlaceholder={
+										service && service.price ? service.price : "service price"
+									}
 									inputFieldHtmlFor="servicePrice"
 									inputFieldLabelName="Price"
 									isRequired={true}
@@ -308,7 +334,11 @@ function ServiceAddForm({ onAdd }) {
 								<InputField
 									inputFieldId="serviceStartTime"
 									inputFieldType="time"
-									inputFieldPlaceholder="xx am/pm"
+									inputFieldPlaceholder={
+										service && service.startTime
+											? service.startTime
+											: "xx am/pm"
+									}
 									inputFieldHtmlFor="serviceStartTime"
 									inputFieldLabelName="Start Time"
 									isRequired={true}
@@ -410,7 +440,11 @@ function ServiceAddForm({ onAdd }) {
 						<InputField
 							inputFieldId="serviceDescription"
 							inputFieldType="text"
-							inputFieldPlaceholder="service description"
+							inputFieldPlaceholder={
+								service && service.description
+									? service.description
+									: "enter service description"
+							}
 							inputFieldHtmlFor="serviceDescription"
 							inputFieldLabelName="Description"
 							isRequired={true}
@@ -446,9 +480,16 @@ function ServiceAddForm({ onAdd }) {
 							{serverError}
 						</p>
 					)}
-					<div className="md:px-32 xl:px-64 xs:px-16 py-8">
+					<div className="flex justify-center space-x-12 py-8">
+						{isModalOpen && service && (
+							<Button
+								buttonName="CLOSE MODAL AND SKIP"
+								buttonStyle="secondary"
+								onClick={() => setIsModalOpen(false)}
+							/>
+						)}
 						<Button
-							buttonName="ADD SERVICE"
+							buttonName={isModalOpen ? "UPDATE SERVICE" : "ADD SERVICE"}
 							buttonType="submit"
 							disabled={isLoading}
 						/>
@@ -461,6 +502,9 @@ function ServiceAddForm({ onAdd }) {
 
 ServiceAddForm.propTypes = {
 	onAdd: PropTypes.func.isRequired,
+	isModalOpen: PropTypes.bool,
+	service: PropTypes.object,
+	setIsModalOpen: PropTypes.func,
 };
 
 export default ServiceAddForm;

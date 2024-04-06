@@ -146,14 +146,14 @@ function SignIn({ signInRequest, signInSuccess }) {
 
 	return (
 		<Layout>
-			<div className="flex min-h-screen flex-col justify-center py-8">
+			<div className="flex flex-col justify-center py-8 min-h-screen">
 				<div className="flex justify-center">
 					<div className="pt-8">
-						<h3 className="text-dark-grey-900 text-center font-bebas text-9xl font-extrabold text-indigo-600">
+						<h3 className="font-bebas font-extrabold text-9xl text-center text-dark-grey-900 text-indigo-600">
 							Sign In.
 						</h3>
 						<form onSubmit={handleSubmit}>
-							<div className="mt-12 grid w-[400px] grid-cols-1">
+							<div className="grid grid-cols-1 mt-12 w-[400px]">
 								<InputField
 									inputFieldId="userEmail"
 									inputFieldType="email"
@@ -190,9 +190,9 @@ function SignIn({ signInRequest, signInSuccess }) {
 									inputFieldError={passwordError}
 								/>
 
-								<div className="px-20 py-8 xl:px-16">
+								<div className="px-20 xl:px-16 py-8">
 									{errorMessage && (
-										<p className="mb-2 text-center font-poppins text-xs text-red-500">
+										<p className="mb-2 font-poppins text-center text-red-500 text-xs">
 											{errorMessage}
 										</p>
 									)}
@@ -202,20 +202,22 @@ function SignIn({ signInRequest, signInSuccess }) {
 										disabled={isLoading}
 									/>
 								</div>
-								<div className="flex flex-col items-center justify-center">
-									<p className="text-grey-900 font-muktaVaani text-sm font-light leading-relaxed">
+								<div className="flex flex-col justify-center items-center">
+									<p className="font-light font-muktaVaani text-grey-900 text-sm leading-relaxed">
 										Not registered yet?{" "}
 										<Link
 											to="/schedulizer/signup"
-											className="font-muktaVaani text-sm font-medium text-indigo-500 hover:text-indigo-600">
+											className="font-medium font-muktaVaani text-indigo-500 text-sm hover:text-indigo-600"
+										>
 											Create an Account
 										</Link>
 									</p>
-									<p className="text-grey-900 font-muktaVaani text-sm font-light leading-relaxed">
+									<p className="font-light font-muktaVaani text-grey-900 text-sm leading-relaxed">
 										Forget Password?{" "}
 										<a
 											href=""
-											className="font-muktaVaani text-sm font-medium text-indigo-500 hover:text-indigo-600">
+											className="font-medium font-muktaVaani text-indigo-500 text-sm hover:text-indigo-600"
+										>
 											Reset now
 										</a>
 									</p>
@@ -223,16 +225,17 @@ function SignIn({ signInRequest, signInSuccess }) {
 							</div>
 						</form>
 
-						<div className="mb-3 flex items-center pt-6">
-							<hr className="border-grey-500 h-0 grow border-b border-solid" />
-							<p className="text-grey-600 mx-4">or</p>
-							<hr className="border-grey-500 h-0 grow border-b border-solid" />
+						<div className="flex items-center mb-3 pt-6">
+							<hr className="border-grey-500 border-b border-solid h-0 grow" />
+							<p className="mx-4 text-grey-600">or</p>
+							<hr className="border-grey-500 border-b border-solid h-0 grow" />
 						</div>
 
 						<div className="px-20 xl:px-16">
 							<a
-								className="bg-grey-300 hover:bg-grey-400 focus:ring-grey-300 flex w-full cursor-pointer items-center justify-center rounded-lg border-2 border-indigo-500 py-2 font-ptSansCaption text-xs font-medium text-indigo-500 transition duration-300 hover:border-indigo-600 hover:bg-indigo-600 hover:text-[#FAF8ED] focus:ring-4"
-								onClick={loginwithgoogle}>
+								className="bg-grey-300 hover:bg-grey-400 focus:ring-grey-300 flex justify-center items-center border-2 border-indigo-500 hover:border-indigo-600 hover:bg-indigo-600 py-2 rounded-lg w-full font-medium font-ptSansCaption text-indigo-500 text-xs hover:text-[#FAF8ED] transition duration-300 cursor-pointer focus:ring-4"
+								onClick={loginwithgoogle}
+							>
 								<img
 									className="mr-6 h-[1rem]"
 									src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
@@ -247,25 +250,29 @@ function SignIn({ signInRequest, signInSuccess }) {
 			<Transition appear show={isModalOpen} as={Fragment}>
 				<Dialog
 					as="div"
-					className="fixed inset-0 z-10 overflow-y-auto bg-indigo-600 pattern-texture-[#FAF8ED]/60 pattern-texture-scale-[1.5]"
-					onClose={closeModalAndNavigate}>
+					className="pattern-topography-[#FAF8ED]/40 pattern-topography-scale-[0.5] z-10 fixed inset-0 bg-indigo-600 overflow-y-auto"
+					onClose={closeModalAndNavigate}
+				>
 					<div className="min-h-screen text-center">
 						<Dialog.Overlay className="fixed" />
 						<span
 							className="inline-block h-screen align-middle"
-							aria-hidden="true">
+							aria-hidden="true"
+						>
 							&#8203;
 						</span>
 						<Dialog.Description
 							as="div"
-							className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-[#FAF8ED] p-12 text-center align-middle transition-all">
+							className="inline-block bg-[#FAF8ED] my-8 p-12 rounded-2xl w-full max-w-lg text-center transform transition-all overflow-hidden align-middle"
+						>
 							<Dialog.Title
 								as="h1"
-								className="leading-2 font-bebas text-5xl font-semibold text-indigo-500">
+								className="font-bebas font-semibold text-5xl text-indigo-500 leading-2"
+							>
 								Sign In Successful!
 							</Dialog.Title>
 							<div className="mt-2">
-								<p className="font-poppins text-sm text-black">
+								<p className="font-poppins text-black text-sm">
 									You will be redirected to the services provided by our
 									platform shortly. Thank you for signing in!
 								</p>

@@ -9,6 +9,7 @@ function ServicesCRUD() {
 	const [services, setServices] = useState([]);
 	const selectedBusiness = useSelector((state) => state.business.businessData);
 	const businessEmail = selectedBusiness?.workEmail;
+	const [selectedService, setSelectedService] = useState(null);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -43,7 +44,7 @@ function ServicesCRUD() {
 		fetchServices(); // Fetch the services when the component mounts
 	}, [businessEmail]);
 
-	console.log(services);
+	// console.log(services);
 	return (
 		<div>
 			<ServiceAddForm onAdd={handleAdd} />
@@ -59,7 +60,10 @@ function ServicesCRUD() {
 								key={index}
 								service={service}
 								onDelete={handleDelete}
-								onEdit={() => setIsModalOpen(true)} // Pass a function instead of calling the function
+								onEdit={() => {
+									setSelectedService(service);
+									setIsModalOpen(true);
+								}} // Pass a function instead of calling the function
 							/>
 						))}
 				</div>
@@ -68,9 +72,9 @@ function ServicesCRUD() {
 				<Dialog
 					as="div"
 					className="z-10 fixed inset-0 bg-indigo-600 overflow-y-auto pattern-texture-[#FAF8ED]/60 pattern-texture-scale-[1.5]"
-					onClose={setIsModalOpen(false)}
+					onClose={() => setIsModalOpen(false)} // Pass a function instead of calling the function
 				>
-					<div className="min-h-screen text-center">
+					<div className="w-full min-h-screen text-center">
 						<Dialog.Overlay className="fixed" />
 						<span
 							className="inline-block h-screen align-middle"
@@ -80,19 +84,25 @@ function ServicesCRUD() {
 						</span>
 						<Dialog.Description
 							as="div"
-							className="inline-block bg-[#FAF8ED] my-8 p-12 rounded-2xl w-full max-w-md text-center transform transition-all overflow-hidden align-middle"
+							className="inline-block bg-[#FAF8ED] my-8 p-12 rounded-2xl text-center transform transition-all overflow-hidden align-middle"
 						>
 							<Dialog.Title
 								as="h1"
 								className="font-bebas font-semibold text-5xl text-indigo-500 leading-2"
 							>
-								Dashboard Access Denied.
+								Edit Your Service.
 							</Dialog.Title>
 							<div className="mt-2">
-								<p className="font-poppins text-black text-sm">
-									You&rsquo;re not signed in as a business owner. Please sign in
-									as a business owner to access the dashboard.
-								</p>
+								<div className="text-left">
+									{isModalOpen && selectedService && (
+										<ServiceAddForm
+											service={selectedService}
+											onAdd={handleAdd}
+											isModalOpen={isModalOpen}
+											setIsModalOpen={setIsModalOpen}
+										/>
+									)}
+								</div>
 							</div>
 						</Dialog.Description>
 					</div>

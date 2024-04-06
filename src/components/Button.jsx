@@ -5,6 +5,11 @@ function Button(props) {
 	const navigate = useNavigate();
 	const buttonType = props.buttonType || "button";
 
+	const buttonClass =
+		props.buttonStyle === "secondary"
+			? "border border-2 border-indigo-500 text-indigo-500 hover:bg-indigo-600 hover:text-[#FAF8ED]"
+			: "bg-indigo-500 text-[#FAF8ED] hover:bg-indigo-600";
+
 	const handleClick = async () => {
 		if (props.onClick) {
 			try {
@@ -25,10 +30,11 @@ function Button(props) {
 			<button
 				type={buttonType}
 				disabled={props.disabled}
-				className={`flex w-full items-center justify-center rounded-md bg-indigo-500 px-6 font-ptSansCaption text-xs text-[#FAF8ED] transition-colors duration-200 hover:bg-indigo-600 xs:py-2 sm:py-2 md:px-4 ${
+				className={`flex w-full items-center justify-center rounded-md px-6 font-ptSansCaption text-xs transition-colors text-[#FAF8ED] duration-300 ease-in-out xs:py-2 sm:py-2 md:px-4 ${buttonClass} ${
 					props.disabled ? "opacity-50 cursor-not-allowed" : ""
 				}`}
-				onClick={handleClick}>
+				onClick={handleClick}
+			>
 				{props.buttonName}
 			</button>
 		</div>
@@ -41,6 +47,7 @@ Button.propTypes = {
 	buttonType: PropTypes.oneOf(["button", "submit", "reset"]),
 	disabled: PropTypes.bool,
 	onClick: PropTypes.func,
+	buttonStyle: PropTypes.oneOf(["primary", "secondary"]),
 };
 
 export default Button;

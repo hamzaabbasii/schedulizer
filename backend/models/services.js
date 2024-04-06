@@ -46,17 +46,19 @@ const ServiceSchema = new mongoose.Schema({
 	},
 	breakStartTime: {
 		type: String,
-		required: true,
 	},
 	breakEndTime: {
 		type: String,
-		required: true,
 	},
 	days: {
 		type: String,
 		required: true,
 	},
 	description: {
+		type: String,
+		required: true,
+	},
+	type: {
 		type: String,
 		required: true,
 	},

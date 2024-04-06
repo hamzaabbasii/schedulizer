@@ -15,6 +15,7 @@ export async function addServices(req, res) {
 		days: req.body.selectedDays,
 		description: req.body.serviceDescription,
 		businessEmail: req.body.businessEmail,
+		type: req.body.serviceType,
 	};
 
 	try {

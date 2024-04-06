@@ -215,14 +215,14 @@ function SignUp() {
 
 	return (
 		<Layout>
-			<div className="flex min-h-screen flex-col justify-center py-12">
+			<div className="flex flex-col justify-center py-12 min-h-screen">
 				<div className="flex justify-center">
 					<div className="pt-12">
-						<h3 className="text-dark-grey-900 text-center font-bebas text-9xl font-extrabold text-indigo-600">
+						<h3 className="font-bebas font-extrabold text-9xl text-center text-dark-grey-900 text-indigo-600">
 							Sign Up.
 						</h3>
 						<form onSubmit={handleSubmit}>
-							<div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-4 md:w-full md:grid-cols-2 lg:w-[600px] xl:w-[700px]">
+							<div className="gap-x-8 gap-y-4 grid grid-cols-1 md:grid-cols-2 mt-12 md:w-full lg:w-[600px] xl:w-[700px]">
 								<div>
 									<InputField
 										inputFieldId="userFirstName"
@@ -355,9 +355,9 @@ function SignUp() {
 								</div>
 							</div>
 							{/* {error && (
-								<p className="mt-1 text-center text-sm text-red-500">{error}</p>
+								<p className="mt-1 text-center text-red-500 text-sm">{error}</p>
 							)} */}
-							<div className="py-8 xs:px-16 md:px-32 xl:px-36">
+							<div className="md:px-32 xl:px-36 xs:px-16 py-8">
 								<Button
 									buttonName="Sign Up"
 									buttonType="submit"
@@ -365,21 +365,22 @@ function SignUp() {
 								/>
 							</div>
 						</form>
-						<p className="text-grey-900 text-center font-muktaVaani text-sm font-light leading-relaxed">
+						<p className="font-light font-muktaVaani text-center text-grey-900 text-sm leading-relaxed">
 							Already have an account?{" "}
 							<Link
 								to="/schedulizer/signin"
-								className="font-muktaVaani text-sm font-semibold text-indigo-500 hover:text-indigo-600">
+								className="font-muktaVaani font-semibold text-indigo-500 text-sm hover:text-indigo-600"
+							>
 								Sign In
 							</Link>
 						</p>
-						<div className="mb-3 flex items-center pt-6">
-							<hr className="border-grey-500 h-0 grow border-b border-solid" />
-							<p className="text-grey-600 mx-4">or</p>
-							<hr className="border-grey-500 h-0 grow border-b border-solid" />
+						<div className="flex items-center mb-3 pt-6">
+							<hr className="border-grey-500 border-b border-solid h-0 grow" />
+							<p className="mx-4 text-grey-600">or</p>
+							<hr className="border-grey-500 border-b border-solid h-0 grow" />
 						</div>
-						<div className="xs:px-16 md:px-32 xl:px-36">
-							<a className="bg-grey-300 hover:bg-grey-400 focus:ring-grey-300 flex w-full cursor-pointer items-center justify-center rounded-lg border-2 border-indigo-500 py-2 font-ptSansCaption text-xs font-medium text-indigo-500 transition duration-300 hover:border-indigo-600 hover:bg-indigo-600 hover:text-[#FAF8ED] focus:ring-4">
+						<div className="md:px-32 xl:px-36 xs:px-16">
+							<a className="bg-grey-300 hover:bg-grey-400 focus:ring-grey-300 flex justify-center items-center border-2 border-indigo-500 hover:border-indigo-600 hover:bg-indigo-600 py-2 rounded-lg w-full font-medium font-ptSansCaption text-indigo-500 text-xs hover:text-[#FAF8ED] transition duration-300 cursor-pointer focus:ring-4">
 								<img
 									className="mr-6 h-[1rem]"
 									src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png"
@@ -394,25 +395,29 @@ function SignUp() {
 			<Transition appear show={isModalOpen} as={Fragment}>
 				<Dialog
 					as="div"
-					className="fixed inset-0 z-10 overflow-y-auto bg-indigo-600 pattern-texture-[#FAF8ED]/60 pattern-texture-scale-[1.5]"
-					onClose={closeModalAndNavigate}>
+					className="pattern-topography-[#FAF8ED]/40 pattern-topography-scale-[0.5] z-10 fixed inset-0 bg-indigo-600 overflow-y-auto"
+					onClose={closeModalAndNavigate}
+				>
 					<div className="min-h-screen text-center">
 						<Dialog.Overlay className="fixed" />
 						<span
 							className="inline-block h-screen align-middle"
-							aria-hidden="true">
+							aria-hidden="true"
+						>
 							&#8203;
 						</span>
 						<Dialog.Description
 							as="div"
-							className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-[#FAF8ED] p-12 text-center align-middle transition-all">
+							className="inline-block bg-[#FAF8ED] my-8 p-12 rounded-2xl w-full max-w-lg text-center transform transition-all overflow-hidden align-middle"
+						>
 							<Dialog.Title
 								as="h1"
-								className="leading-2 font-bebas text-5xl font-semibold text-indigo-500">
+								className="font-bebas font-semibold text-5xl text-indigo-500 leading-2"
+							>
 								Sign Up Successful!
 							</Dialog.Title>
 							<div className="mt-2">
-								<p className="font-poppins text-sm text-black">
+								<p className="font-poppins text-black text-sm">
 									You will be redirected to the Sign In page shortly.
 								</p>
 							</div>
