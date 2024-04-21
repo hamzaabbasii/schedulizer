@@ -1,75 +1,53 @@
 import mongoose from "mongoose";
 
-// const timeSchema = new mongoose.Schema({
-// 	hours: {
-// 		type: Number,
-// 		required: true,
-// 		min: 1,
-// 		max: 12,
-// 	},
-// 	minutes: {
-// 		type: Number,
-// 		required: true,
-// 		min: 0,
-// 		max: 59,
-// 	},
-// 	period: {
-// 		type: String,
-// 		enum: ["AM", "PM"],
-// 		required: true,
-// 	},
-// });
-
 // Create Schema
-
 const ServiceSchema = new mongoose.Schema({
-	businessId: [{ type: mongoose.Types.ObjectId, ref: "Business" }],
-	title: {
-		type: String,
-		required: true,
-	},
-	duration: {
-		type: Object,
-		required: true,
-	},
-	price: {
-		type: Number,
-		required: true,
-	},
-	startTime: {
-		type: String,
-		required: true,
-	},
-	endTime: {
-		type: String,
-		required: true,
-	},
-	breakStartTime: {
-		type: String,
-	},
-	breakEndTime: {
-		type: String,
-	},
-	days: {
-		type: String,
-		required: true,
-	},
-	description: {
-		type: String,
-		required: true,
-	},
-	type: {
-		type: String,
-		required: true,
-	},
-	businessEmail: {
-		type: String,
-		ref: "Business",
-		required: true,
-	},
-});
+  businessId: [{ type: mongoose.Types.ObjectId, ref: "Business" }],
+  title: {
+    type: String,
+    required: true,
+  },
+  duration: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  startTime: {
+    type: String,
+    required: true,
+  },
+  endTime: {
+    type: String,
+    required: true,
+  },
+  breakStartTime: {
+    type: String,
+    required: true,
+  },
+  breakEndTime: {
+    type: String,
+    required: true,
+  },
+  selectedDays: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  workEmail: {
+    type: String,
+    ref: "Business",
+    required: true,
+  },
+  appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointments" }],
+},{ collection: 'services' });
 
 // collection part
-const Service = mongoose.model("services", ServiceSchema);
+const Service = mongoose.model("Service", ServiceSchema);
 
 export default Service;

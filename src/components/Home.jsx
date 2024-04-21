@@ -13,15 +13,16 @@ function Home() {
 		);
 		animate(".exclusive", { x: [-1000, 0] }, { duration: 2 });
 		animate(".solution", { x: [500, 0] }, { duration: 2 });
-		scroll(
-			animate(
-				".heroText",
-				{ opcaity: [1, 0.5] },
-				{ scale: [1, 1.5] },
-				{ duration: 2 }
-			)
-		);
 	});
+
+	scroll(
+		animate(
+			".heroText",
+			{ opcaity: [1, 0.5] },
+			{ scale: [1, 1.5] },
+			{ duration: 2 }
+		)
+	);
 
 	return (
 		<Layout>
