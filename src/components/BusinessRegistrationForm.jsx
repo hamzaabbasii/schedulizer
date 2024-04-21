@@ -289,19 +289,6 @@ function BusinessRegistrationForm() {
 	const displayError = (emailError, error) =>
 		emailError ? emailError : error.businessEmail;
 
-	console.log("businessData: ", {
-		businessName,
-		businessContactNumber,
-		businessEmail,
-		userEmail,
-		businessCity,
-		businessCategory,
-		businessAddress,
-		businessMapLink,
-		businessBio,
-		businessProfilePicture,
-	});
-
 	return (
 		<Layout>
 			<div className="flex flex-col justify-center py-12 min-h-screen">

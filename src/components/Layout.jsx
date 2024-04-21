@@ -11,8 +11,8 @@ function Layout({ children }) {
 				// style={{ backgroundImage: "url('./images/parallax5.webp')" }}
 			>
 				{children}
-				<BacktoTopButton />
 			</div>
+			<BacktoTopButton />
 		</div>
 	);
 }

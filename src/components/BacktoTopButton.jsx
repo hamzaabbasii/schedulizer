@@ -45,10 +45,11 @@ function BackToTopButton() {
 	});
 
 	return (
-		<animated.div style={springs} className="fixed bottom-4 right-4">
+		<animated.div style={springs} className="right-4 bottom-4 fixed">
 			<button
 				onClick={scrollToTop}
-				className="flex items-center justify-between gap-4 rounded-full bg-indigo-500 px-4 py-2 font-ptSansCaption text-xs font-light text-[#FAF8ED] opacity-90 transition-colors duration-200 hover:bg-indigo-600">
+				className="flex justify-between items-center gap-4 bg-indigo-500 hover:bg-indigo-600 opacity-90 px-4 py-2 rounded-full font-light font-ptSansCaption text-[#FAF8ED] text-xs transition-colors duration-200"
+			>
 				{/* <svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="white"
@@ -61,7 +62,8 @@ function BackToTopButton() {
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 384 512"
 					fill="#FAF8ED"
-					height="1rem">
+					height="1rem"
+				>
 					<path d="M32 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c53 0 96-43 96-96l0-306.7 73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 109.3 160 416c0 17.7-14.3 32-32 32l-96 0z" />
 				</svg>
 			</button>

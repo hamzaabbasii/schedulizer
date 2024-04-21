@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import InputField from "../form/InputField";
 import Button from "../Button";
 import CheckboxList from "../form/CheckboxList";
@@ -102,11 +103,19 @@ function ServiceAddForm({ service, onAdd, isModalOpen, setIsModalOpen }) {
 
 	const serviceTypes = ["physical", "online"];
 
+	const isServiceDescription = (value) => /^.{100,}$/.test(value);
+	const [counterColor, setCounterColor] = useState("text-indigo-500");
+
+	useEffect(() => {
+		setCounterColor(
+			serviceDescription.length < 100 ? "text-red-500" : "text-indigo-500"
+		);
+	}, [serviceDescription]);
+
 	const isAlphabetic = (value) => /^[A-Za-z\s&]+$/.test(value);
 	// const isNumeric = (value) => /^\d{1,2}$/.test(value);
 	const isPrice = (value) => /^[0-9]{1,5}(\.[0-9]{1,2})?$/.test(value);
 	const isNotEmpty = (value) => value.trim() !== "";
-	const isTextDescription = (value) => value.length >= 100;
 
 	const validateField = (
 		value,
@@ -254,13 +263,15 @@ function ServiceAddForm({ service, onAdd, isModalOpen, setIsModalOpen }) {
 									onChange={(e) => setServiceTitle(e.target.value)}
 									validateOnBlur={true}
 									validate={(value) =>
-										validateField(
-											value,
-											isAlphabetic,
-											"Business name should only contain alphabets",
-											"serviceTitle",
-											"Service Title" // pass the label name here
-										)
+										service
+											? null
+											: validateField(
+													value,
+													isAlphabetic,
+													"Business name should only contain alphabets",
+													"serviceTitle",
+													"Service Title" // pass the label name here
+											  )
 									}
 									inputFieldError={error.serviceTitle}
 								/>
@@ -268,7 +279,9 @@ function ServiceAddForm({ service, onAdd, isModalOpen, setIsModalOpen }) {
 
 							<div className="col-span-1">
 								<Dropdown
-									dropdownbuttonname="select type"
+									dropdownbuttonname={
+										service && service.type ? service.type : "select type"
+									}
 									dropdownlabelname="Type"
 									dropdownlabelhtmlfor="serviceType"
 									onOptionSelect={handleServiceTypeSelect}
@@ -425,54 +438,58 @@ function ServiceAddForm({ service, onAdd, isModalOpen, setIsModalOpen }) {
 							</div>
 						</div>
 
-						<CheckboxList
-							onItemsChange={handleDaysSelect}
-							label="Select Days"
-							items={["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]}
-							checkboxFor="serviceDays"
-						/>
-						{error.selectedDays && (
-							<p className="mt-1 font-poppins text-red-500 text-xs">
-								{error.selectedDays}
-							</p>
-						)}
+						<div>
+							<CheckboxList
+								onItemsChange={handleDaysSelect}
+								label="Select Days"
+								items={["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]}
+								checkboxFor="serviceDays"
+							/>
+							{error.selectedDays && (
+								<p className="mt-1 font-poppins text-red-500 text-xs">
+									{error.selectedDays}
+								</p>
+							)}
+						</div>
 
-						<InputField
-							inputFieldId="serviceDescription"
-							inputFieldType="text"
-							inputFieldPlaceholder={
-								service && service.description
-									? service.description
-									: "enter service description"
-							}
-							inputFieldHtmlFor="serviceDescription"
-							inputFieldLabelName="Description"
-							isRequired={true}
-							fieldType="textarea"
-							cols={10}
-							rows={5}
-							maxLength={500}
-							value={serviceDescription}
-							onChange={(e) => setServiceDescription(e.target.value)}
-							validateOnBlur={true}
-							validate={(value) =>
-								validateField(
-									value,
-									isTextDescription,
-									"Service description should be atleast 100 characters.",
-									"serviceDescription",
-									"Service Description"
-								)
-							}
-							inputFieldError={error.serviceDescription}
-						/>
-						<div
-							id="character-counter"
-							className="text-right opacity-80 text-indigo-500 text-sm"
-						>
-							<span id="typed-characters">0</span>
-							<span>/</span>
-							<span id="maximum-characters">500</span>
+						<div>
+							<InputField
+								inputFieldId="serviceDescription"
+								inputFieldType="text"
+								inputFieldPlaceholder={
+									service && service.description
+										? service.description
+										: "enter service description"
+								}
+								inputFieldHtmlFor="serviceDescription"
+								inputFieldLabelName="Description"
+								isRequired={true}
+								fieldType="textarea"
+								cols={10}
+								rows={5}
+								maxLength={500}
+								value={serviceDescription}
+								onChange={(e) => setServiceDescription(e.target.value)}
+								validateOnBlur={true}
+								validate={(value) =>
+									validateField(
+										value,
+										isServiceDescription,
+										"Service description should be atleast 100 characters.",
+										"serviceDescription",
+										"Service Description"
+									)
+								}
+								inputFieldError={error.serviceDescription}
+							/>
+							<div
+								id="character-counter"
+								className={`text-right opacity-80 text-indigo-500 text-sm ${counterColor}`}
+							>
+								<span id="typed-characters">{serviceDescription.length}</span>
+								<span>/</span>
+								<span id="maximum-characters">500</span>
+							</div>
 						</div>
 					</div>
 					{serverError && (

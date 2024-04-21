@@ -39,7 +39,7 @@ function ServiceCard({ service, businessName, businessId }) {
 	const timing = `${service?.startTime} to ${service?.endTime}`;
 
 	return (
-		<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-6 rounded-2xl md:max-w-sm break-words group hover:scale-[1.02] duration-500 ease-in-out">
+		<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-500 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-6 rounded-2xl md:max-w-sm break-words group hover:scale-[1.02] duration-500 ease-in-out">
 			<div className="flex flex-col justify-center items-center gap-7">
 				<div className="flex flex-col space-y-4">
 					<div className="flex flex-col justify-center text-center">
@@ -51,24 +51,28 @@ function ServiceCard({ service, businessName, businessId }) {
 						</div>
 					</div>
 
-					<div className="flex flex-wrap justify-center items-center space-x-4 font-muktaVaani text-black text-xs serviceDetails">
-						<div>
-							Duration:{" "}
-							<span className="font-semibold">{service.duration[0]}</span>
+					<div className="flex flex-col justify-center items-center space-x-4 font-muktaVaani text-black text-xs serviceDetails">
+						<div className="flex justify-start space-x-6">
+							<div>
+								Duration:{" "}
+								<span className="font-semibold">{service.duration[0]}</span>
+							</div>
+							<div>
+								Price: <span className="font-semibold">Rs.{service.price}</span>
+							</div>
 						</div>
-						<div>
-							Price: <span className="font-semibold">Rs.{service.price}</span>
-						</div>
-						<div>
-							Timings: <span className="font-semibold">{timing}</span>
-						</div>
-						<div>
-							Days: <span className="font-semibold">{service.days}</span>
+						<div className="flex justify-start space-x-6">
+							<div>
+								Timings: <span className="font-semibold">{timing}</span>
+							</div>
+							<div>
+								Days: <span className="font-semibold">{service.days}</span>
+							</div>
 						</div>
 					</div>
 				</div>
 
-				<div className="font-muktaVaani font-normal text-black text-center text-sm break-words description">
+				<div className="flex flex-wrap py-2 font-muktaVaani font-normal text-black text-center text-sm break-words description">
 					{service.description.substring(0, 250)}
 				</div>
 				<div className="pt-2 appointmentButton">
@@ -118,10 +122,7 @@ function ServiceCard({ service, businessName, businessId }) {
 							<div className="mt-2">
 								<p className="font-poppins text-black text-sm">
 									You&rsquo;re not signed in. Please sign in to book an
-									appointment. <br />
-									<span className="transition-all animate-pulse duration-1000 ease-in-out">
-										Redirecting you to the sign-in page...
-									</span>
+									appointment. Redirecting you to the sign-in page...
 								</p>
 							</div>
 						</Dialog.Description>
@@ -156,10 +157,7 @@ function ServiceCard({ service, businessName, businessId }) {
 							<div className="mt-2">
 								<p className="font-poppins text-black text-sm">
 									You&rsquo;re signed in as a business. Please sign in as a user
-									to book an appointment.
-									<span className="animate-pulse">
-										Redirecting you to the sign-in page...
-									</span>
+									to book an appointment. Redirecting you to the sign-in page...
 								</p>
 							</div>
 						</Dialog.Description>

@@ -24,11 +24,11 @@ function BusinessCard({ business }) {
 	});
 
 	return (
-		<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-6 rounded-2xl md:max-w-sm break-words group hover:scale-[1.02] duration-500 ease-in-out">
+		<div className="inline-flex flex-col justify-center items-center gap-5 border-2 border-indigo-500 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-6 rounded-2xl md:max-w-sm break-words group hover:scale-[1.02] duration-500 ease-in-out">
 			<div className="flex flex-col justify-center items-center gap-7">
 				<div className="inline-flex justify-between items-center gap-8">
 					<img
-						className="border-2 border-black rounded-full w-12 h-12"
+						className="border-2 border-indigo-500 rounded-full w-12 h-12"
 						src={imagePath}
 						alt="Profile"
 					/>
@@ -43,7 +43,7 @@ function BusinessCard({ business }) {
 						</div>
 					</div>
 				</div>
-				<div className="font-muktaVaani font-normal text-black text-center text-sm businessDescription">
+				<div className="py-2 font-muktaVaani font-normal text-black text-center text-sm businessDescription">
 					{business.bio.length > 100
 						? `${business.bio.slice(0, 100)}...`
 						: business.bio}

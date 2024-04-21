@@ -63,7 +63,7 @@ function BusinessInfo() {
 					BUSINESS INFO.
 				</h1>
 				<div className="flex justify-center items-center space-x-6 py-12">
-					<div className="flex justify-center items-center gap-5 space-x-12 border-2 border-indigo-200 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-8 rounded-2xl break-words group">
+					<div className="flex flex-col justify-center items-center space-y-6 border-2 border-indigo-500 bg-[#FAF8ED] shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-8 rounded-2xl break-words group">
 						<div className="flex flex-col justify-center items-center space-y-4">
 							<img
 								className="border-2 border-black rounded-full w-20 h-20"
@@ -71,7 +71,7 @@ function BusinessInfo() {
 								alt="Profile"
 							/>
 							<div className="flex flex-col justify-center items-center">
-								<div className="font-poppins font-semibold text-base text-black">
+								<div className="font-poppins font-semibold text-black text-lg">
 									{business.name}
 								</div>
 								<div className="flex justify-between space-x-6">

@@ -52,7 +52,7 @@ function ServicesCRUD() {
 				<h1 className="flex justify-center font-bebas font-semibold text-6xl text-indigo-500 tracking-wide">
 					MANAGE YOUR SERVICES.
 				</h1>
-				<div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-16 py-12">
+				<div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-16 pt-6">
 					{services
 						.filter((service) => service.businessEmail === businessEmail)
 						.map((service, index) => (
@@ -71,7 +71,7 @@ function ServicesCRUD() {
 			<Transition appear show={isModalOpen} as={Fragment}>
 				<Dialog
 					as="div"
-					className="z-10 fixed inset-0 bg-indigo-600 overflow-y-auto pattern-texture-[#FAF8ED]/60 pattern-texture-scale-[1.5]"
+					className="pattern-topography-[#FAF8ED]/40 pattern-topography-scale-[0.5] z-10 fixed inset-0 items-center bg-indigo-600 overflow-y-auto"
 					onClose={() => setIsModalOpen(false)} // Pass a function instead of calling the function
 				>
 					<div className="w-full min-h-screen text-center">

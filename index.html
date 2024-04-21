@@ -17,7 +17,7 @@
 			rel="stylesheet"
 		/>
 	</head>
-	<body class="bg-[#FAF8ED]">
+	<body class="bg-[#FAF8ED] scroll-smooth">
 		<div id="root"></div>
 		<script type="module" src="/src/main.jsx"></script>
 		<script
@@ -29,5 +29,12 @@
 			src="../path/to/flowbite/dist/flowbite.min.js"
 			type="module"
 		></script>
+		<script src="dist/smooth-scrollbar.js"></script>
+
+		<script>
+			var Scrollbar = window.Scrollbar;
+
+			Scrollbar.init(document.querySelector("#root"), options);
+		</script>
 	</body>
 </html>
