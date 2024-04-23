@@ -497,6 +497,7 @@ function ServiceAddForm({ service, onAdd, isModalOpen, setIsModalOpen }) {
 							{serverError}
 						</p>
 					)}
+
 					<div className="flex justify-center space-x-12 py-8">
 						{isModalOpen && service && (
 							<Button

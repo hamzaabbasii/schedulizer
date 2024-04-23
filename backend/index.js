@@ -34,5 +34,6 @@ const PORT = 8000;
 app.use("/user", userRouter);
 app.use("/business", businessRouter);
 app.use("/services", servicesRouter);
+app.use("/appointment", servicesRouter);
 app.use("/uploads", express.static("uploads"));
 app.listen(PORT, () => console.log(`Server started at Port:${PORT}`));

@@ -43,10 +43,12 @@ function Services() {
 	return (
 		<Layout>
 			<Filters />
+
 			<div className="pt-36 pb-12">
 				<h1 className="flex justify-center font-bebas font-semibold text-8xl text-indigo-500 tracking-wide">
 					SERVICES.
 				</h1>
+
 				<div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-16 py-12">
 					{services.map((service, index) => {
 						if (

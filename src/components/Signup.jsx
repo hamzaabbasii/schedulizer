@@ -221,6 +221,7 @@ function SignUp() {
 						<h3 className="font-bebas font-extrabold text-9xl text-center text-dark-grey-900 text-indigo-600">
 							Sign Up.
 						</h3>
+
 						<form onSubmit={handleSubmit}>
 							<div className="gap-x-8 gap-y-4 grid grid-cols-1 md:grid-cols-2 mt-12 md:w-full lg:w-[600px] xl:w-[700px]">
 								<div>
@@ -365,6 +366,7 @@ function SignUp() {
 								/>
 							</div>
 						</form>
+
 						<p className="font-light font-muktaVaani text-center text-grey-900 text-sm leading-relaxed">
 							Already have an account?{" "}
 							<Link
@@ -374,11 +376,13 @@ function SignUp() {
 								Sign In
 							</Link>
 						</p>
+
 						<div className="flex items-center mb-3 pt-6">
 							<hr className="border-grey-500 border-b border-solid h-0 grow" />
 							<p className="mx-4 text-grey-600">or</p>
 							<hr className="border-grey-500 border-b border-solid h-0 grow" />
 						</div>
+
 						<div className="md:px-32 xl:px-36 xs:px-16">
 							<a className="bg-grey-300 hover:bg-grey-400 focus:ring-grey-300 flex justify-center items-center border-2 border-indigo-500 hover:border-indigo-600 hover:bg-indigo-600 py-2 rounded-lg w-full font-medium font-ptSansCaption text-indigo-500 text-xs hover:text-[#FAF8ED] transition duration-300 cursor-pointer focus:ring-4">
 								<img
@@ -392,6 +396,7 @@ function SignUp() {
 					</div>
 				</div>
 			</div>
+
 			<Transition appear show={isModalOpen} as={Fragment}>
 				<Dialog
 					as="div"
